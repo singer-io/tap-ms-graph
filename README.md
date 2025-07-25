@@ -1,1 +1,1 @@
-# tap-ms-azure-active-directory
+# tap-ms-graph
