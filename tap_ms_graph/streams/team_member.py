@@ -9,6 +9,7 @@ class TeamMember(FullTableStream):
     tap_stream_id = "team_member"
     key_properties = ["team_id", "id"]
     replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "value"
     path = "teams/{team_id}/members"
     path = "teams"

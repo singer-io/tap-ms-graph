@@ -1,1 +1,73 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "description": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "groupTypes": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    },
+    "mail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "mailEnabled": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "mailNickname": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "securityEnabled": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "visibility": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

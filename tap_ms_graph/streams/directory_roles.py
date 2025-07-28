@@ -9,5 +9,6 @@ class DirectoryRoles(FullTableStream):
     tap_stream_id = "directory_roles"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "value"
     path = "directoryRoles"

@@ -1,1 +1,36 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "publisherDomain": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    }
+  }
+}

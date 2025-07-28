@@ -1,1 +1,92 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "givenName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "surname": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "userPrincipalName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "jobTitle": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "mail": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "mobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "officeLocation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "businessPhones": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "lastModifiedDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

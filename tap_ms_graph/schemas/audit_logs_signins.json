@@ -1,1 +1,50 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "userId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "userPrincipalName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appDisplayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "status": {
+      "type": [
+        "null",
+        "object"
+      ],
+      "additionalProperties": false,
+      "properties": {}
+    },
+    "ipAddress": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    }
+  }
+}

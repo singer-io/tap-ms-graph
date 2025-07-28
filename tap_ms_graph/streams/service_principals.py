@@ -9,5 +9,6 @@ class ServicePrincipals(FullTableStream):
     tap_stream_id = "service_principals"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "value"
     path = "servicePrincipals"

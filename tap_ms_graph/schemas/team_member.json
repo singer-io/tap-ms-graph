@@ -1,1 +1,29 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "teamId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "userId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "roles": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": [
+          "null",
+          "string"
+        ]
+      }
+    }
+  }
+}

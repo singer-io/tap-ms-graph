@@ -1,1 +1,23 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "groupId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ownerId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "ownerType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  }
+}

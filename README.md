@@ -1,4 +1,4 @@
-# tap-ms_graph
+# tap-ms-graph
 
 This is a [Singer](https://singer.io) tap that produces JSON-formatted data
 following the [Singer
@@ -43,15 +43,15 @@ This tap:
 ## Streams
 
 
-** [users](https://learn.microsoft.com/en-us/graph/api/user-delta)**
+** [users](https://learn.microsoft.com/en-us/graph/api/users)**
 - Data Key = value
 - Primary keys: ['id']
-- Replication strategy: INCREMENTAL
+- Replication strategy: FULL_TABLE
 
-** [groups](https://learn.microsoft.com/en-us/graph/api/group-delta)**
+** [groups](https://learn.microsoft.com/en-us/graph/api/groups)**
 - Data Key = value
 - Primary keys: ['id']
-- Replication strategy: INCREMENTAL
+- Replication strategy: FULL_TABLE
 
 ** [group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)**
 - Data Key = value
@@ -128,7 +128,7 @@ This tap:
     > source venv/bin/activate
     > python setup.py install
     OR
-    > cd .../tap-ms_graph
+    > cd .../tap-ms-graph
     > pip install -e .
     ```
 2. Dependent libraries. The following dependent libraries were installed.
@@ -143,13 +143,13 @@ This tap:
 
 3. Create your tap's `config.json` file.  The tap config file for this tap should include these entries:
    - `start_date` - the default value to use if no bookmark exists for an endpoint (rfc3339 date string)
-   - `user_agent` (string, optional): Process and email for API logging purposes. Example: `tap-ms_graph <api_user_email@your_company.com>`
+   - `user_agent` (string, optional): Process and email for API logging purposes. Example: `tap-ms-graph <api_user_email@your_company.com>`
    - `request_timeout` (integer, `300`): Max time for which request should wait to get a response. Default request_timeout is 300 seconds.
    
     ```json
     {
         "start_date": "2019-01-01T00:00:00Z",
-        "user_agent": "tap-ms_graph <api_user_email@your_company.com>",
+        "user_agent": "tap-ms-graph <api_user_email@your_company.com>",
         "request_timeout": 300,
         ...
     }```
@@ -170,7 +170,7 @@ This tap:
 4. Run the Tap in Discovery Mode
     This creates a catalog.json for selecting objects/fields to integrate:
     ```bash
-    tap-ms_graph --config config.json --discover > catalog.json
+    tap-ms-graph --config config.json --discover > catalog.json
     ```
    See the Singer docs on discovery mode
    [here](https://github.com/singer-io/getting-started/blob/master/docs/DISCOVERY_MODE.md
@@ -179,17 +179,17 @@ This tap:
 
     For Sync mode:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
     To load to json files to verify outputs:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json | target-json > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json | target-json > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
     To pseudo-load to [Stitch Import API](https://github.com/singer-io/target-stitch) with dry run:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json | target-stitch --config target_config.json --dry-run > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json | target-stitch --config target_config.json --dry-run > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
 

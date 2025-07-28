@@ -1,1 +1,42 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "accountEnabled": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "appOwnerOrganizationId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    }
+  }
+}
