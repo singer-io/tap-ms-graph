@@ -1,5 +1,5 @@
-from typing import Dict, Any
-from singer import get_bookmark, get_logger
+from typing import Dict, Iterator, List
+from singer import get_logger
 from tap_ms_graph.streams.abstracts import FullTableStream
 
 LOGGER = get_logger()

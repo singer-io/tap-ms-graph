@@ -1,0 +1,178 @@
+{
+  "type": "object",
+  "properties": {
+    "createdDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "lastModifiedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "webUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "driveType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdBy": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "user": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "lastModifiedBy": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "user": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "email": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "owner": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "user": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "email": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "displayName": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "quota": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "deleted": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "remaining": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "state": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "total": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "used": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

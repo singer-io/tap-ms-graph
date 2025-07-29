@@ -6,7 +6,7 @@ LOGGER = get_logger()
 
 
 class AuditLogsSignins(FullTableStream):
-    tap_stream_id = "audit_logs_signins"
+    tap_stream_id = "audit_logs_signIns"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []

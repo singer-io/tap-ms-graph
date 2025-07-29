@@ -3,34 +3,70 @@
   "properties": {
     "id": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "displayName": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "description": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
-    "createdDateTime": {
+    "groupTypes": {
       "type": [
-        "null",
-        "string"
+        "array",
+        "null"
       ],
-      "format": "date-time"
+      "items": {
+        "type": "string"
+      }
     },
-    "internalId": {
+    "mail": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
+      ]
+    },
+    "mailEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "mailNickname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "securityEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "resourceProvisioningOptions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "visibility": {
+      "type": [
+        "string",
+        "null"
       ]
     }
-  }
+  },
+  "additionalProperties": false
 }
