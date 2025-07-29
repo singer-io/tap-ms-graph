@@ -1,14 +1,14 @@
 from typing import Dict, Any
 from singer import get_bookmark, get_logger
-from tap_ms_graph.streams.abstracts import FullTableStream
+from tap_ms_graph.streams.abstracts import IncrementalStream
 
 LOGGER = get_logger()
 
 
-class Users(FullTableStream):
+class Users(IncrementalStream):
     tap_stream_id = "users"
     key_properties = ["id"]
-    replication_method = "FULL_TABLE"
-    replication_keys = []
+    replication_method = "INCREMENTAL"
+    replication_keys = ["updatedDateTime"]
     data_key = "value"
-    path = "users"
+    path = "users/delta"

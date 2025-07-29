@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "topic": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "lastUpdatedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "chatType": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "webUrl": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tenantId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "viewpoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "isHidden": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "lastMessageReadDateTime": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
