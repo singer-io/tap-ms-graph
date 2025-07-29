@@ -1,26 +1,24 @@
 {
   "type": "object",
   "properties": {
-    "@odata.type": {
+    "parentFolderId": {
       "type": [
         "string",
         "null"
       ]
     },
-    "id": {
+    "birthday": {
       "type": [
         "string",
-        "null"
-      ]
-    },
-    "roles": {
-      "type": [
-        "array",
         "null"
       ],
-      "items": {
-        "type": "string"
-      }
+      "format": "date-time"
+    },
+    "fileAs": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "displayName": {
       "type": [
@@ -28,18 +26,17 @@
         "null"
       ]
     },
-    "userId": {
+    "givenName": {
       "type": [
         "string",
         "null"
       ]
     },
-    "email": {
+    "initials": {
       "type": [
         "string",
         "null"
       ]
     }
-  },
-  "additionalProperties": false
+  }
 }

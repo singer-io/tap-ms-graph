@@ -2,28 +2,25 @@
   "type": "object",
   "properties": {
     "id": {
+      "type": "string"
+    },
+    "deletedDateTime": {
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "format": "date-time"
     },
     "description": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "displayName": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "isSyncedFromOnPremises": {
-      "type": [
-        "boolean",
-        "null"
-      ]
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "id",
+    "description",
+    "displayName"
+  ]
 }

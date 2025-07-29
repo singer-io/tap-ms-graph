@@ -1,8 +1,8 @@
 from tap_ms_graph.streams.applications import Applications
-from tap_ms_graph.streams.audit_logs_directory import AuditLogsDirectory
-from tap_ms_graph.streams.audit_logs_signins import AuditLogsSignins
+from tap_ms_graph.streams.audit_logs_directoryAudits import AuditLogsDirectoryaudits
+from tap_ms_graph.streams.audit_logs_signIns import AuditLogsSignins
 from tap_ms_graph.streams.calendar_events import CalendarEvents
-from tap_ms_graph.streams.channel import Channel
+from tap_ms_graph.streams.channels import Channels
 from tap_ms_graph.streams.chat_messages import ChatMessages
 from tap_ms_graph.streams.chats import Chats
 from tap_ms_graph.streams.conditional_access_policies import ConditionalAccessPolicies
@@ -23,25 +23,25 @@ from tap_ms_graph.streams.users import Users
 
 STREAMS = {
     "applications": Applications,
-    "audit_logs_directory": AuditLogsDirectory,
-    "audit_logs_signins": AuditLogsSignins,
-    # "calendar_events": CalendarEvents,
-    "channel": Channel,
-    # "chat_messages": ChatMessages,
+    "audit_logs_directoryAudits": AuditLogsDirectoryaudits,
+    "audit_logs_signIns": AuditLogsSignins,
+    "calendar_events": CalendarEvents,
+    "channels": Channels,
+    "chat_messages": ChatMessages,
     "chats": Chats,
     "conditional_access_policies": ConditionalAccessPolicies,
-    # "contacts": Contacts,
+    "contacts": Contacts,
     "directory_role_member": DirectoryRoleMember,
     "directory_role_templates": DirectoryRoleTemplates,
     "directory_roles": DirectoryRoles,
-    # "drive_items": DriveItems,
+    "drive_items": DriveItems,
     "drives": Drives,
     "group_member": GroupMember,
     "group_owner": GroupOwner,
     "groups": Groups,
-    # "mail_messages": MailMessages,
+    "mail_messages": MailMessages,
     "service_principals": ServicePrincipals,
     "team_member": TeamMember,
     "teams": Teams,
-    # "users": Users,
+    "users": Users,
 }

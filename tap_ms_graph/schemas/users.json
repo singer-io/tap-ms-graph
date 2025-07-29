@@ -1,31 +1,16 @@
 {
   "type": "object",
   "properties": {
-    "id": {
-      "type": [
-        "null",
-        "string"
-      ]
+    "businessPhones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
     },
     "displayName": {
-      "type": [
-        "null",
-        "string"
-      ]
+      "type": "string"
     },
     "givenName": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "surname": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "userPrincipalName": {
       "type": [
         "null",
         "string"
@@ -61,32 +46,23 @@
         "string"
       ]
     },
-    "businessPhones": {
-      "type": [
-        "null",
-        "array"
-      ],
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      }
-    },
-    "createdDateTime": {
+    "surname": {
       "type": [
         "null",
         "string"
-      ],
-      "format": "date-time"
+      ]
     },
-    "lastModifiedDateTime": {
-      "type": [
-        "null",
-        "string"
-      ],
-      "format": "date-time"
+    "userPrincipalName": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
     }
   },
-  "additionalProperties": false
+  "required": [
+    "id",
+    "displayName",
+    "userPrincipalName",
+    "businessPhones"
+  ]
 }

@@ -5,11 +5,11 @@ from tap_ms_graph.streams.abstracts import FullTableStream
 LOGGER = get_logger()
 
 
-class Channel(FullTableStream):
-    tap_stream_id = "channel"
-    key_properties = ["team_id", "id"]
+class Channels(FullTableStream):
+    tap_stream_id = "channels"
+    key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
     path = "teams/{team_id}/channels"
-    path = "teams"
+    parent = "teams"

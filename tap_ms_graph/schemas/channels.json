@@ -1,26 +1,18 @@
 {
   "type": "object",
   "properties": {
-    "@odata.type": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
     "id": {
       "type": [
         "string",
         "null"
       ]
     },
-    "roles": {
+    "createdDateTime": {
       "type": [
-        "array",
+        "string",
         "null"
       ],
-      "items": {
-        "type": "string"
-      }
+      "format": "date-time"
     },
     "displayName": {
       "type": [
@@ -28,15 +20,21 @@
         "null"
       ]
     },
-    "userId": {
+    "description": {
       "type": [
         "string",
         "null"
       ]
     },
-    "email": {
+    "membershipType": {
       "type": [
         "string",
+        "null"
+      ]
+    },
+    "isArchived": {
+      "type": [
+        "boolean",
         "null"
       ]
     }

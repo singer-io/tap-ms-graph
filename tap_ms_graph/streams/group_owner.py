@@ -7,9 +7,9 @@ LOGGER = get_logger()
 
 class GroupOwner(FullTableStream):
     tap_stream_id = "group_owner"
-    key_properties = ["group_id", "id"]
+    key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
     path = "groups/{group_id}/owners"
-    path = "groups"
+    parent = "groups"

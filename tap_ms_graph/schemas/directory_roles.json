@@ -7,6 +7,19 @@
         "string"
       ]
     },
+    "deletedDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "description": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "displayName": {
       "type": [
         "null",
@@ -18,12 +31,7 @@
         "null",
         "string"
       ]
-    },
-    "description": {
-      "type": [
-        "null",
-        "string"
-      ]
     }
-  }
+  },
+  "additionalProperties": false
 }

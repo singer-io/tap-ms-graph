@@ -1,23 +1,72 @@
 {
   "type": "object",
   "properties": {
-    "groupId": {
+    "@odata.type": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "businessPhones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "givenName": {
       "type": [
         "null",
         "string"
       ]
     },
-    "ownerId": {
+    "jobTitle": {
       "type": [
         "null",
         "string"
       ]
     },
-    "ownerType": {
+    "mail": {
       "type": [
         "null",
         "string"
       ]
+    },
+    "mobilePhone": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "officeLocation": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "surname": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "userPrincipalName": {
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "@odata.type",
+    "id",
+    "businessPhones",
+    "displayName",
+    "userPrincipalName"
+  ]
 }

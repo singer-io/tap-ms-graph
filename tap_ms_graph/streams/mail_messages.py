@@ -1,25 +1,15 @@
-from typing import Dict, Any
-from singer import get_bookmark, get_logger
-from tap_ms_graph.streams.abstracts import IncrementalStream
+from typing import Dict, Iterator, List
+from singer import get_logger
+from tap_ms_graph.streams.abstracts import FullTableStream
 
 LOGGER = get_logger()
 
 
-class MailMessages(IncrementalStream):
+class MailMessages(FullTableStream):
     tap_stream_id = "mail_messages"
-    key_properties = ["user_id", "id"]
-    replication_method = "INCREMENTAL"
-    replication_keys = ["lastModifiedDateTime"]
+    key_properties = ["id"]
+    replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "value"
-    path = "users/{user_id}/messages/delta"
+    path = "users/{user_id}/messages"
     parent = "users"
-    bookmark_value = None
-
-    def get_bookmark(self, state: Dict, key: Any = None) -> int:
-        """
-        Return initial bookmark value only for the child stream.
-        """
-        if not self.bookmark_value:        
-            self.bookmark_value = super().get_bookmark(state, key)
-
-        return self.bookmark_value

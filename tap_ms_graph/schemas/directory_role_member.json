@@ -1,23 +1,71 @@
 {
   "type": "object",
   "properties": {
-    "roleId": {
+    "@odata.type": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "businessPhones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "givenName": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
-    "memberId": {
+    "jobTitle": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
-    "memberType": {
+    "mail": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
+    },
+    "mobilePhone": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "officeLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "surname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "userPrincipalName": {
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "@odata.type",
+    "id",
+    "displayName",
+    "userPrincipalName"
+  ]
 }

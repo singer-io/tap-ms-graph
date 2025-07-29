@@ -3,183 +3,176 @@
   "properties": {
     "createdDateTime": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ],
       "format": "date-time"
     },
     "description": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "id": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "lastModifiedDateTime": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ],
       "format": "date-time"
     },
     "name": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "webUrl": {
       "type": [
-        "null",
-        "string"
-      ]
+        "string",
+        "null"
+      ],
+      "format": "uri"
     },
     "driveType": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "createdBy": {
       "type": [
-        "null",
-        "object"
+        "object",
+        "null"
       ],
       "properties": {
         "user": {
           "type": [
-            "null",
-            "object"
+            "object",
+            "null"
           ],
           "properties": {
             "displayName": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
-      },
-      "additionalProperties": false
+      }
     },
     "lastModifiedBy": {
       "type": [
-        "null",
-        "object"
+        "object",
+        "null"
       ],
       "properties": {
         "user": {
           "type": [
-            "null",
-            "object"
+            "object",
+            "null"
           ],
           "properties": {
             "email": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             },
             "id": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             },
             "displayName": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
-      },
-      "additionalProperties": false
+      }
     },
     "owner": {
       "type": [
-        "null",
-        "object"
+        "object",
+        "null"
       ],
       "properties": {
         "user": {
           "type": [
-            "null",
-            "object"
+            "object",
+            "null"
           ],
           "properties": {
             "email": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             },
             "id": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             },
             "displayName": {
               "type": [
-                "null",
-                "string"
+                "string",
+                "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
-      },
-      "additionalProperties": false
+      }
     },
     "quota": {
       "type": [
-        "null",
-        "object"
+        "object",
+        "null"
       ],
       "properties": {
         "deleted": {
           "type": [
-            "null",
-            "integer"
+            "integer",
+            "null"
           ]
         },
         "remaining": {
           "type": [
-            "null",
-            "integer"
+            "integer",
+            "null"
           ]
         },
         "state": {
           "type": [
-            "null",
-            "string"
+            "string",
+            "null"
           ]
         },
         "total": {
           "type": [
-            "null",
-            "integer"
+            "integer",
+            "null"
           ]
         },
         "used": {
           "type": [
-            "null",
-            "integer"
+            "integer",
+            "null"
           ]
         }
-      },
-      "additionalProperties": false
+      }
     }
-  },
-  "additionalProperties": false
+  }
 }

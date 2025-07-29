@@ -3,70 +3,212 @@
   "properties": {
     "id": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
-    "displayName": {
+    "deletedDateTime": {
       "type": [
-        "null",
-        "string"
-      ]
-    },
-    "description": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "groupTypes": {
-      "type": [
-        "null",
-        "array"
+        "string",
+        "null"
       ],
-      "items": {
-        "type": [
-          "null",
-          "string"
-        ]
-      }
+      "format": "date-time"
     },
-    "mail": {
+    "classification": {
       "type": [
-        "null",
-        "string"
-      ]
-    },
-    "mailEnabled": {
-      "type": [
-        "null",
-        "boolean"
-      ]
-    },
-    "mailNickname": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "securityEnabled": {
-      "type": [
-        "null",
-        "boolean"
-      ]
-    },
-    "visibility": {
-      "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ]
     },
     "createdDateTime": {
       "type": [
-        "null",
-        "string"
+        "string",
+        "null"
       ],
       "format": "date-time"
+    },
+    "creationOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expirationDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "groupTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isAssignableToRole": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "mail": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mailEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "mailNickname": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "membershipRule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "membershipRuleProcessingState": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesDomainName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesLastSyncDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "onPremisesNetBiosName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSamAccountName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSecurityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSyncEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "preferredDataLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "proxyAddresses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "renewedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "resourceBehaviorOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resourceProvisioningOptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "securityEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "securityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "theme": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "uniqueName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "visibility": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesProvisioningErrors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "serviceProvisioningErrors": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
     }
   },
   "additionalProperties": false
