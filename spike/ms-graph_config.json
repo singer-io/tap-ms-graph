@@ -1,0 +1,213 @@
+{
+  "tap_name": "MS_Graph",
+  "required_config_keys": ["tenant_id", "client_id", "client_secret", "start_date"],
+  "page_size": 1000,
+  "next_page_key": "@odata.nextLink",
+  "pagination_key": null,
+  "headers": {
+    "Accept": "application/json"
+  },
+  "params": {},
+  "auth_header_key": "Authorization",
+  "auth_config_key": "access_token",
+  "base_url": "https://graph.microsoft.com/v1.0/",
+  "streams": [
+    {
+      "name": "applications",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "applications",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/application-list"
+    },
+    {
+      "name": "audit_logs_directoryAudits",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "auditLogs/directoryAudits",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/directoryaudit-list"
+    },
+    {
+      "name": "audit_logs_signIns",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "auditLogs/signIns",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/signin-list"
+    },
+    {
+      "name": "calendar_events",
+      "parent": "users",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "users/{id}/events",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/event-list"
+    },
+    {
+      "name": "channels",
+      "parent": "teams",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "teams/{team_id}/channels",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/channel-list"
+    },
+    {
+      "name": "chat_messages",
+      "parent": "chats",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "chats/{chat_id}/messages",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/chatmessage-list"
+    },
+    {
+      "name": "chats",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "chats",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/chat-list"
+    },
+    {
+      "name": "conditional_access_policies",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "identity/conditionalAccess/policies",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies"
+    },
+    {
+      "name": "contacts",
+      "parent": "users",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "users/{id}/contacts",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/contact-list"
+    },
+    {
+      "name": "directory_role_member",
+      "parent": "directory_roles",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "directoryRoles/{role_id}/members",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/directoryrole-list"
+    },
+    {
+      "name": "directory_role_templates",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "directoryRoleTemplates",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list"
+    },
+    {
+      "name": "directory_roles",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "directoryRoles",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/directoryrole-list"
+    },
+    {
+      "name": "drive_items",
+      "parent": "drives",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "drives/{id}/items",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/driveitem-list"
+    },
+    {
+      "name": "drives",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "drives",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/drive-list"
+    },
+    {
+      "name": "group_member",
+      "parent": "groups",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "groups/{group_id}/members",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/group-list-members"
+    },
+    {
+      "name": "group_owner",
+      "parent": "groups",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "groups/{group_id}/owners",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/group-list-owners"
+    },
+    {
+      "name": "groups",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "groups",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/group-list"
+    },
+    {
+      "name": "mail_messages",
+      "parent": "users",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "users/{id}/messages",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/message-list"
+    },
+    {
+      "name": "service_principals",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "servicePrincipals",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list"
+    },
+    {
+      "name": "team_member",
+      "parent": "teams",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "teams/{team_id}/members",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/team-list-members"
+    },
+    {
+      "name": "teams",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "teams",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/team-list"
+    },
+    {
+      "name": "users",
+      "key_properties": ["id"],
+      "replication_method": "FULL_TABLE",
+      "path": "users",
+      "data_key": "value",
+      "doc_link": "https://learn.microsoft.com/en-us/graph/api/user-list"
+    }
+  ],
+  "tap_tester_creds": {
+    "tenant_id": "AZURE_TENANT_ID",
+    "client_id": "AZURE_CLIENT_ID",
+    "client_secret": "AZURE_CLIENT_SECRET"
+  },
+  "author": "Custom Azure AD Tap",
+  "third_party_dependencies": [
+    "singer-python",
+    "requests",
+    "backoff"
+  ]
+}
