@@ -12,3 +12,4 @@ class Drives(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "drives"
+    http_method = "GET"

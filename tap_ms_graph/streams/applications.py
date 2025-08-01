@@ -12,3 +12,4 @@ class Applications(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "applications"
+    http_method = "GET"

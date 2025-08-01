@@ -13,3 +13,15 @@ class ChatMessages(FullTableStream):
     data_key = "value"
     path = "chats/{chat_id}/messages"
     parent = "chats"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Prepare URL endpoint for child streams."""
+        return f"{self.client.base_url}/{self.path.format(chat_id = parent_obj['id'])}"
+        
+    def update_params(self, **kwargs) -> None:
+        # Add $top=999
+        self.params.update({
+            "$top": 999
+        })
+        self.params.update(kwargs)

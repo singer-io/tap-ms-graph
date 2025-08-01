@@ -12,3 +12,5 @@ class Users(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "users"
+    children = ["calendar_events", "contacts", "drive_items", "mail_messages"]
+    http_method = "GET"

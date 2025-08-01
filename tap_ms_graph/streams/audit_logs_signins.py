@@ -12,3 +12,4 @@ class AuditLogsSignins(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "auditLogs/signIns"
+    http_method = "GET"

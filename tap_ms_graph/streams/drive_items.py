@@ -11,5 +11,11 @@ class DriveItems(FullTableStream):
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    path = "/users/{userId}/drives"
+    path = "/users/{user_id}/drives"
     parent = "users"
+    http_method = "GET"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Prepare URL endpoint for child streams."""
+        return f"{self.client.base_url}/{self.path.format(user_id = parent_obj['id'])}"

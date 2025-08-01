@@ -12,3 +12,4 @@ class ConditionalAccessPolicies(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "identity/conditionalAccess/policies"
+    http_method = "GET"

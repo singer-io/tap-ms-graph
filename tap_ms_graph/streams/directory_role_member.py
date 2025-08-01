@@ -13,3 +13,9 @@ class DirectoryRoleMember(FullTableStream):
     data_key = "value"
     path = "directoryRoles/{role_id}/members"
     parent = "directory_roles"
+    http_method = "GET"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Prepare URL endpoint for child streams."""
+        return f"{self.client.base_url}/{self.path.format(role_id = parent_obj['id'])}"

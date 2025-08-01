@@ -1,6 +1,6 @@
 from tap_ms_graph.streams.applications import Applications
 from tap_ms_graph.streams.audit_logs_directoryAudits import AuditLogsDirectoryaudits
-from tap_ms_graph.streams.audit_logs_signIns import AuditLogsSignins
+from tap_ms_graph.streams.audit_logs_signins import AuditLogsSignins
 from tap_ms_graph.streams.calendar_events import CalendarEvents
 from tap_ms_graph.streams.channels import Channels
 from tap_ms_graph.streams.chat_messages import ChatMessages

@@ -27,7 +27,7 @@ class BaseStream(ABC):
 
     url_endpoint = ""
     path = ""
-    page_size = 1000
+    page_size = 999
     next_page_key = "@odata.nextLink"
     headers = {'Accept': 'application/json'}
     children = []
@@ -42,6 +42,7 @@ class BaseStream(ABC):
         self.metadata = metadata.to_map(catalog.metadata)
         self.child_to_sync = []
         self.params = {}
+        self.data_payload = dict()
 
     @property
     @abstractmethod
@@ -70,6 +71,11 @@ class BaseStream(ABC):
 
     def is_selected(self):
         return metadata.get(self.metadata, (), "selected")
+    
+    @property
+    @abstractmethod
+    def http_method(self) -> str:
+        """Defines the http method for the stream."""
 
     @abstractmethod
     def sync(
@@ -96,7 +102,7 @@ class BaseStream(ABC):
 
     def get_records(self) -> List:
         """Interacts with api client interaction and pagination."""
-        self.params[""] = self.page_size
+        self.update_params()
         next_page = 1
         while next_page:
             response = self.client.get(
@@ -137,6 +143,12 @@ class BaseStream(ABC):
         Get the URL endpoint for the stream
         """
         return self.url_endpoint or f"{self.client.base_url}/{self.path}"
+
+    def update_data_payload(self, parent_obj: Dict = None, **kwargs) -> Dict:
+        """
+        Constructs the JSON body payload for the API request.
+        """
+        self.data_payload.update(kwargs)
 
 
 class IncrementalStream(BaseStream):
@@ -214,6 +226,7 @@ class FullTableStream(BaseStream):
     ) -> Dict:
         """Abstract implementation for `type: Fulltable` stream."""
         self.url_endpoint = self.get_url_endpoint(parent_obj)
+        self.update_data_payload(parent_obj=parent_obj)
         with metrics.record_counter(self.tap_stream_id) as counter:
             for record in self.get_records():
                 transformed_record = transformer.transform(
