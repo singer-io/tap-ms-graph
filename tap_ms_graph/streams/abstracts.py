@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Tuple, List
+from typing import Any, Dict, Tuple, Iterator
 from singer import (
     Transformer,
     get_bookmark,
@@ -100,9 +100,8 @@ class BaseStream(ABC):
         """
 
 
-    def get_records(self) -> List:
+    def get_records(self) -> Iterator:
         """Interacts with api client interaction and pagination."""
-        self.update_params()
         next_page = 1
         while next_page:
             response = self.client.get(
@@ -110,8 +109,8 @@ class BaseStream(ABC):
             )
             raw_records = response.get(self.data_key, [])
             next_page = response.get(self.next_page_key)
-
-            self.params[self.next_page_key] = next_page
+            if next_page:
+                self.url_endpoint = next_page
             yield from raw_records
 
     def write_schema(self) -> None:

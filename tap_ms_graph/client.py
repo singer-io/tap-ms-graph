@@ -50,7 +50,7 @@ class Client:
     def __init__(self, config: Mapping[str, Any]) -> None:
         self.config = config
         self._session = session()
-        self.base_url = "https://graph.microsoft.com/v1.0/"
+        self.base_url = "https://graph.microsoft.com/v1.0"
 
 
         config_request_timeout = config.get("request_timeout")
