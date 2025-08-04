@@ -15,6 +15,11 @@ setup(name="tap-ms-graph",
         "requests==2.32.4",
         "backoff==2.2.1"
       ],
+        extras_require={
+            "dev": [
+            "pytest>=7.0.0",
+            ],
+        },
       entry_points="""
           [console_scripts]
           tap-ms-graph=tap_ms_graph:main
