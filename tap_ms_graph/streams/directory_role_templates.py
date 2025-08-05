@@ -12,4 +12,3 @@ class DirectoryRoleTemplates(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "directoryRoleTemplates"
-    http_method = "GET"

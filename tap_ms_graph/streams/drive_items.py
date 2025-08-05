@@ -13,7 +13,6 @@ class DriveItems(FullTableStream):
     data_key = "value"
     path = "/users/{user_id}/drives"
     parent = "users"
-    http_method = "GET"
 
 
     def get_url_endpoint(self, parent_obj: Dict = None) -> str:

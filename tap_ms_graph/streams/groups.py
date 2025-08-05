@@ -13,4 +13,3 @@ class Groups(FullTableStream):
     data_key = "value"
     path = "groups"
     children = ["group_owner", "group_member"]
-    http_method = "GET"

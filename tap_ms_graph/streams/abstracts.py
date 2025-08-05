@@ -34,6 +34,7 @@ class BaseStream(ABC):
     parent = ""
     data_key = ""
     parent_bookmark_key = ""
+    http_method = "GET"
 
     def __init__(self, client=None, catalog=None) -> None:
         self.client = client
@@ -71,11 +72,7 @@ class BaseStream(ABC):
 
     def is_selected(self):
         return metadata.get(self.metadata, (), "selected")
-    
-    @property
-    @abstractmethod
-    def http_method(self) -> str:
-        """Defines the http method for the stream."""
+
 
     @abstractmethod
     def sync(

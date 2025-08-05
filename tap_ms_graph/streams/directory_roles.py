@@ -13,4 +13,3 @@ class DirectoryRoles(FullTableStream):
     data_key = "value"
     path = "directoryRoles"
     children = ["directory_role_member"]
-    http_method = "GET"

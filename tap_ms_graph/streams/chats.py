@@ -13,4 +13,3 @@ class Chats(FullTableStream):
     data_key = "value"
     path = "chats"
     children = ["chat_messages"]
-    http_method = "GET"

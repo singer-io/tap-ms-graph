@@ -13,7 +13,6 @@ class Channels(FullTableStream):
     data_key = "value"
     path = "teams/{team_id}/channels"
     parent = "teams"
-    http_method = "GET"
 
 
     def get_url_endpoint(self, parent_obj: Dict = None) -> str:
