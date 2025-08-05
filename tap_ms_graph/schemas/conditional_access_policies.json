@@ -23,13 +23,15 @@
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "format": "date-time"
     },
     "modifiedDateTime": {
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "format": "date-time"
     },
     "state": {
       "type": [

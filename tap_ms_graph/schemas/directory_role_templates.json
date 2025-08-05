@@ -18,9 +18,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "id",
-    "description",
-    "displayName"
-  ]
+  "additionalProperties": true
 }
