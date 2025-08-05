@@ -53,7 +53,7 @@ This tap:
     - [Users](https://learn.microsoft.com/en-us/graph/api/user-delta)
 
 - Outputs the schema for each resource
-- Incrementally pulls data based on the input state
+- FULL_TABLE pulls data based on the input state
 
 
 ## Streams
@@ -76,18 +76,18 @@ This tap:
 
 ** [calendar_events](https://learn.microsoft.com/en-us/graph/api/event-delta)**
 - Data Key = value
-- Primary keys: ['user_id', 'id']
-- Replication strategy: INCREMENTAL
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
 
 ** [channel](https://learn.microsoft.com/en-us/graph/api/channel-list)**
 - Data Key = value
-- Primary keys: ['team_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 ** [chat_messages](https://learn.microsoft.com/en-us/graph/api/chatmessage-delta)**
 - Data Key = value
-- Primary keys: ['chat_id', 'id']
-- Replication strategy: INCREMENTAL
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
 
 ** [chats](https://learn.microsoft.com/en-us/graph/api/chat-list)**
 - Data Key = value
@@ -101,12 +101,12 @@ This tap:
 
 ** [contacts](https://learn.microsoft.com/en-us/graph/api/contact-delta)**
 - Data Key = value
-- Primary keys: ['user_id', 'id']
-- Replication strategy: INCREMENTAL
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
 
 ** [directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)**
 - Data Key = value
-- Primary keys: ['role_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 ** [directory_role_templates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)**
@@ -121,8 +121,8 @@ This tap:
 
 ** [drive_items](https://learn.microsoft.com/en-us/graph/api/driveitem-delta)**
 - Data Key = value
-- Primary keys: ['drive_id', 'id']
-- Replication strategy: INCREMENTAL
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
 
 ** [drives](https://learn.microsoft.com/en-us/graph/api/drive-list)**
 - Data Key = value
@@ -131,23 +131,23 @@ This tap:
 
 ** [group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)**
 - Data Key = value
-- Primary keys: ['group_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 ** [group_owner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)**
 - Data Key = value
-- Primary keys: ['group_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 ** [groups](https://learn.microsoft.com/en-us/graph/api/group-delta)**
 - Data Key = value
 - Primary keys: ['id']
-- Replication strategy: INCREMENTAL
+- Replication strategy: FULL_TABLE
 
 ** [mail_messages](https://learn.microsoft.com/en-us/graph/api/message-delta)**
 - Data Key = value
-- Primary keys: ['user_id', 'id']
-- Replication strategy: INCREMENTAL
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
 
 ** [service_principals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)**
 - Data Key = value
@@ -156,7 +156,7 @@ This tap:
 
 ** [team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members)**
 - Data Key = value
-- Primary keys: ['team_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 ** [teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)**
@@ -167,7 +167,7 @@ This tap:
 ** [users](https://learn.microsoft.com/en-us/graph/api/user-delta)**
 - Data Key = value
 - Primary keys: ['id']
-- Replication strategy: INCREMENTAL
+- Replication strategy: FULL_TABLE
 
 
 
