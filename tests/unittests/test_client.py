@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
 from requests.exceptions import ConnectionError, Timeout, ChunkedEncodingError
 
@@ -90,87 +90,114 @@ def mock_token():
 
 
 class TestClientRequests:
-    url = "https://graph.microsoft.com/v1.0/me/messages"
-    params = {}
-    headers = {
-        'User-Agent': 'singer',
-        'Content-Type': 'application/json',
-    }
+    base_url = "https://graph.microsoft.com/v1.0"
 
     @pytest.fixture(autouse=True)
     def set_expected_headers(self):
-        self.expected_headers = dict(self.headers)
-        self.expected_headers["Authorization"] = "mocked_token"
+        self.default_headers = {
+            'User-Agent': 'singer',
+            'Content-Type': 'application/json',
+        }
 
+    @pytest.mark.parametrize(
+        "endpoint, params, headers, expected_response",
+        [
+            ("/me/messages", {}, {}, {"result": []}),
+            ("/me/events", {"$top": 2}, {"X-Test": "1"}, {"value": ["event1", "event2"]}),
+            ("/me/contacts", {"$filter": "emailAddress eq 'abc@test.com'"}, {}, {"value": ["contact1"]}),
+        ]
+    )
     @patch("requests.Session.request")
-    def test_successful_request(self, mock_request, client_config, mock_token):
-        # First call: Token, Second call: Actual GET
-        mock_request.side_effect = [mock_token, get_response(200, {"result": []})]
+    def test_successful_request_multiple_cases(self, mock_request, client_config, mock_token,
+                                               endpoint, params, headers, expected_response):
+        full_url = f"{self.base_url}{endpoint}"
+        merged_headers = {**self.default_headers, **headers}
+        expected_headers = dict(merged_headers)
+        expected_headers["Authorization"] = "mocked_token"
+
+        mock_request.side_effect = [mock_token, get_response(200, expected_response)]
 
         with Client(client_config) as client:
-            result = client.get(self.url, self.params, self.headers)
+            result = client.get(full_url, params, merged_headers)
 
-        assert result == {"result": []}
+        assert result == expected_response
         assert mock_request.call_count == 2
         mock_request.assert_called_with(
             "GET",
-            self.url,
-            headers=self.expected_headers,
-            params=self.params,
+            full_url,
+            headers=expected_headers,
+            params=params,
             timeout=300
         )
 
-    @pytest.mark.parametrize("error", [ConnectionError, Timeout, ChunkedEncodingError])
+    @pytest.mark.parametrize(
+        "error", [ConnectionError, Timeout, ChunkedEncodingError]
+    )
+    @pytest.mark.parametrize(
+        "endpoint", ["/me/messages", "/me/events"]
+    )
     @patch("requests.Session.request")
-    def test_request_errors_retry(self, mock_request, client_config, mock_token, error):
+    def test_request_errors_retry(self, mock_request, client_config, mock_token, error, endpoint):
+        full_url = f"{self.base_url}{endpoint}"
         mock_request.side_effect = [mock_token] + [error()] * 5
+
         with pytest.raises(error):
             with Client(client_config) as client:
-                client.get(self.url, self.params, self.headers)
+                client.get(full_url, {}, self.default_headers)
+
         assert mock_request.call_count == 6  # 1 for token + 5 retries
 
+    @pytest.mark.parametrize("retry_after", ["1", "5", "10"])
+    @pytest.mark.parametrize("endpoint", ["/me/messages", "/me/contacts"])
     @patch("requests.Session.request")
-    def test_rate_limit_error(self, mock_request, client_config, mock_token):
+    def test_rate_limit_error(self, mock_request, client_config, mock_token, endpoint, retry_after):
+        full_url = f"{self.base_url}{endpoint}"
+
         mock_request.side_effect = [mock_token] + [
-            get_response(429, {}, headers={"Retry-After": "3"}, raise_error=True)
+            get_response(429, {}, headers={"Retry-After": retry_after}, raise_error=True)
         ] * 5
 
         with pytest.raises(MS_GraphRateLimitError):
             with Client(client_config) as client:
-                client.get(self.url, self.params, self.headers)
-        assert mock_request.call_count == 6  # 1 token + 5 retries
+                client.get(full_url, {}, self.default_headers)
 
+        assert mock_request.call_count == 6
+
+    @pytest.mark.parametrize("endpoint", ["/me/messages", "/me/events", "/me/contacts"])
     @patch("requests.Session.request")
-    def test_authorization_error(self, mock_request, client_config, mock_token):
+    def test_authorization_error(self, mock_request, client_config, mock_token, endpoint):
+        full_url = f"{self.base_url}{endpoint}"
         mock_request.side_effect = [mock_token, get_response(401, {}, raise_error=True)]
 
         with pytest.raises(MS_GraphUnauthorizedError) as excinfo:
             with Client(client_config) as client:
-                client.get(self.url, self.params, self.headers)
+                client.get(full_url, {}, self.default_headers)
 
         assert mock_request.call_count == 2
         assert "HTTP-error-code: 401" in str(excinfo.value)
 
+    @pytest.mark.parametrize("retry_after", ["3", "6"])
+    @pytest.mark.parametrize("endpoint", ["/me/messages", "/me/events"])
     @patch("time.sleep", return_value=None)
     @patch("requests.Session.request")
-    def test_rate_limit_with_backoff_sleep(self, mock_request, mock_sleep, client_config, mock_token):
-        # First call returns the token
-        # Next 5 simulate 429 Too Many Requests with Retry-After: 3
+    def test_rate_limit_with_backoff_sleep(self, mock_request, mock_sleep, client_config, mock_token, endpoint, retry_after):
+        full_url = f"{self.base_url}{endpoint}"
+
         mock_request.side_effect = [mock_token] + [
             get_response(
                 429,
                 json_data={"error": "Rate limit exceeded"},
-                headers={"Retry-After": "3"},
+                headers={"Retry-After": retry_after},
                 raise_error=True
             )
         ] * 5
 
         with pytest.raises(MS_GraphRateLimitError):
             with Client(client_config) as client:
-                client.get(self.url, self.params, self.headers)
+                client.get(full_url, {}, self.default_headers)
 
-        assert mock_request.call_count == 6  # 1 token + 5 retries
-        assert mock_sleep.call_count >= 1  # Confirm backoff sleep was triggered
+        assert mock_request.call_count == 6
+        assert mock_sleep.call_count >= 1
 
 
 @patch("tap_ms_graph.client.datetime")
