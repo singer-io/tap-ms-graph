@@ -48,7 +48,7 @@ def test_raise_for_error_success(status_code):
         ({"code": "BadRequest", "details": "Invalid input"}, MS_GraphBadRequestError, "HTTP-error-code: 400"),
         ({"message": "Unauthorized access"}, MS_GraphUnauthorizedError, "Unauthorized access"),
         (None, MS_GraphInternalServerError, "HTTP-error-code: 500"),
-        ({"message": "I'm new exception"}, MS_GraphError, "I'm new exception"),
+        ({"message": "Unknown error received from the API."}, MS_GraphError, "Unknown error"),
     ],
 )
 def test_raise_for_error_exceptions(response_data, expected_exception, expected_msg_part):
