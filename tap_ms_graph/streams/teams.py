@@ -13,7 +13,6 @@ class Teams(FullTableStream):
     data_key = "value"
     params = "$filter=resourceProvisioningOptions/Any(x:x eq 'Team')"
     path = "groups"
-    http_method = "GET"
 
 
     def get_url_endpoint(self, parent_obj: Dict = None) -> str:

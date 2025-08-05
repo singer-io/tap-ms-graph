@@ -12,4 +12,3 @@ class ServicePrincipals(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "servicePrincipals"
-    http_method = "GET"

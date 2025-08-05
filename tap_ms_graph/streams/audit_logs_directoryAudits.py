@@ -12,4 +12,3 @@ class AuditLogsDirectoryaudits(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "auditLogs/directoryAudits"
-    http_method = "GET"

@@ -13,7 +13,6 @@ class GroupMember(FullTableStream):
     data_key = "value"
     path = "groups/{group_id}/members"
     parent = "groups"
-    http_method = "GET"
     
     def get_url_endpoint(self, parent_obj: Dict = None) -> str:
         """Prepare URL endpoint for child streams."""
