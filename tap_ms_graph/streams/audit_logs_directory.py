@@ -5,8 +5,8 @@ from tap_ms_graph.streams.abstracts import FullTableStream
 LOGGER = get_logger()
 
 
-class AuditLogsDirectoryaudits(FullTableStream):
-    tap_stream_id = "audit_logs_directoryAudits"
+class AuditLogsDirectory(FullTableStream):
+    tap_stream_id = "audit_logs_directory"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []

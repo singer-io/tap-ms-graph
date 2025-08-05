@@ -14,11 +14,11 @@ This tap:
 
     - [AuditLogsSignins](https://learn.microsoft.com/en-us/graph/api/signin-list)
 
-    - [CalendarEvents](https://learn.microsoft.com/en-us/graph/api/event-delta)
+    - [CalendarEvents](https://learn.microsoft.com/en-us/graph/api/user-list-events)
 
     - [Channel](https://learn.microsoft.com/en-us/graph/api/channel-list)
 
-    - [ChatMessages](https://learn.microsoft.com/en-us/graph/api/chatmessage-delta)
+    - [ChatMessages](https://learn.microsoft.com/en-us/graph/api/chat-list-messages)
 
     - [Chats](https://learn.microsoft.com/en-us/graph/api/chat-list)
 
@@ -40,9 +40,9 @@ This tap:
 
     - [GroupOwner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)
 
-    - [Groups](https://learn.microsoft.com/en-us/graph/api/group-delta)
+    - [Groups](https://learn.microsoft.com/en-us/graph/api/group-list)
 
-    - [MailMessages](https://learn.microsoft.com/en-us/graph/api/message-delta)
+    - [MailMessages](https://learn.microsoft.com/en-us/graph/api/user-list-messages)
 
     - [ServicePrincipals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)
 
@@ -50,7 +50,7 @@ This tap:
 
     - [Teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)
 
-    - [Users](https://learn.microsoft.com/en-us/graph/api/user-delta)
+    - [Users](https://learn.microsoft.com/en-us/graph/api/user-list)
 
 - Outputs the schema for each resource
 - FULL_TABLE pulls data based on the input state
@@ -59,112 +59,112 @@ This tap:
 ## Streams
 
 
-** [applications](https://learn.microsoft.com/en-us/graph/api/application-list)**
+[applications](https://learn.microsoft.com/en-us/graph/api/application-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [audit_logs_directory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)**
+[audit_logs_directory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [audit_logs_signins](https://learn.microsoft.com/en-us/graph/api/signin-list)**
+[audit_logs_signins](https://learn.microsoft.com/en-us/graph/api/signin-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [calendar_events](https://learn.microsoft.com/en-us/graph/api/event-delta)**
+[calendar_events](https://learn.microsoft.com/en-us/graph/api/user-list-events)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [channel](https://learn.microsoft.com/en-us/graph/api/channel-list)**
+[channel](https://learn.microsoft.com/en-us/graph/api/channel-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [chat_messages](https://learn.microsoft.com/en-us/graph/api/chatmessage-delta)**
+[chat_messages](https://learn.microsoft.com/en-us/graph/api/chat-list-messages)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [chats](https://learn.microsoft.com/en-us/graph/api/chat-list)**
+[chats](https://learn.microsoft.com/en-us/graph/api/chat-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [conditional_access_policies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)**
+[conditional_access_policies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [contacts](https://learn.microsoft.com/en-us/graph/api/contact-delta)**
+[contacts](https://learn.microsoft.com/en-us/graph/api/contact-delta)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)**
+[directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [directory_role_templates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)**
+[directory_role_templates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [directory_roles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)**
+[directory_roles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [drive_items](https://learn.microsoft.com/en-us/graph/api/driveitem-delta)**
+[drive_items](https://learn.microsoft.com/en-us/graph/api/driveitem-delta)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [drives](https://learn.microsoft.com/en-us/graph/api/drive-list)**
+[drives](https://learn.microsoft.com/en-us/graph/api/drive-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)**
+[group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [group_owner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)**
+[group_owner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [groups](https://learn.microsoft.com/en-us/graph/api/group-delta)**
+[groups](https://learn.microsoft.com/en-us/graph/api/group-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [mail_messages](https://learn.microsoft.com/en-us/graph/api/message-delta)**
+[mail_messages](https://learn.microsoft.com/en-us/graph/api/user-list-messages)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [service_principals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)**
+[service_principals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members)**
+[team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)**
+[teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [users](https://learn.microsoft.com/en-us/graph/api/user-delta)**
+[users](https://learn.microsoft.com/en-us/graph/api/user-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
