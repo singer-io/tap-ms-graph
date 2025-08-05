@@ -21,7 +21,7 @@
       "doc_link": "https://learn.microsoft.com/en-us/graph/api/application-list"
     },
     {
-      "name": "audit_logs_directoryAudits",
+      "name": "audit_logs_directory",
       "key_properties": ["id"],
       "replication_method": "FULL_TABLE",
       "path": "auditLogs/directoryAudits",
