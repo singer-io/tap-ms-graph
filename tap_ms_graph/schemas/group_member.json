@@ -62,12 +62,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "@odata.type",
-    "id",
-    "displayName",
-    "userPrincipalName",
-    "businessPhones"
-  ],
   "additionalProperties": false
 }

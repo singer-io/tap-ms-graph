@@ -59,10 +59,5 @@
       "type": "string"
     }
   },
-  "required": [
-    "id",
-    "displayName",
-    "userPrincipalName",
-    "businessPhones"
-  ]
+  "additionalProperties": true
 }

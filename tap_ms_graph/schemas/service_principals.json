@@ -45,7 +45,10 @@
       "type": "boolean"
     },
     "createdDateTime": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "format": "date-time"
     },
     "description": {
@@ -239,17 +242,5 @@
       "additionalProperties": false
     }
   },
-  "required": [
-    "id",
-    "accountEnabled",
-    "appDisplayName",
-    "appId",
-    "appOwnerOrganizationId",
-    "appRoleAssignmentRequired",
-    "createdDateTime",
-    "displayName",
-    "servicePrincipalType",
-    "signInAudience"
-  ],
   "additionalProperties": true
 }
