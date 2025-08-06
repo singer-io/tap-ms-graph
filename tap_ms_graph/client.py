@@ -10,12 +10,12 @@ import urllib.parse
 
 from tap_ms_graph.exceptions import (
     ERROR_CODE_EXCEPTION_MAPPING,
-    MS_GraphError,
-    MS_GraphBackoffError,
-    MS_GraphRateLimitError,
-    MS_GraphInternalServerError,
-    MS_GraphBadGatewayError,
-    MS_GraphServiceUnavailableError)
+    MsGraphError,
+    MsGraphBackoffError,
+    MsGraphRateLimitError,
+    MsGraphInternalServerError,
+    MsGraphBadGatewayError,
+    MsGraphServiceUnavailableError)
 
 LOGGER = get_logger()
 REQUEST_TIMEOUT = 300
@@ -41,7 +41,7 @@ def raise_for_error(response: requests.Response) -> None:
                 response_json.get("message", ERROR_CODE_EXCEPTION_MAPPING.get(
                     response.status_code, {}).get("message", "Unknown Error")))
         exc = ERROR_CODE_EXCEPTION_MAPPING.get(
-            response.status_code, {}).get("raise_exception", MS_GraphError)
+            response.status_code, {}).get("raise_exception", MsGraphError)
         raise exc(message, response) from None
 
 def wait_if_retry_after(details):
@@ -153,11 +153,11 @@ class Client:
             ConnectionError,
             ChunkedEncodingError,
             Timeout,
-            MS_GraphRateLimitError,
-            MS_GraphInternalServerError,
-            MS_GraphBadGatewayError,
-            MS_GraphServiceUnavailableError,
-            MS_GraphBackoffError
+            MsGraphRateLimitError,
+            MsGraphInternalServerError,
+            MsGraphBadGatewayError,
+            MsGraphServiceUnavailableError,
+            MsGraphBackoffError
         ),
         max_tries=5,
     )
