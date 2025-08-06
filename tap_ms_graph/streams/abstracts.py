@@ -184,7 +184,6 @@ class IncrementalStream(BaseStream):
                 transformed_record = transformer.transform(
                     record, self.schema, self.metadata
                 )
-                self.append_times_to_dates(transformed_record)
 
                 record_timestamp = transformed_record[self.replication_keys[0]]
                 if record_timestamp >= bookmark_date:
