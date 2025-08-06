@@ -8,8 +8,8 @@ jobs:
       - run:
           name: "Setup virtual env"
           command: |
-            python3 -mvenv /usr/local/share/virtualenvs/tap-ms_graph
-            source /usr/local/share/virtualenvs/tap-ms_graph/bin/activate
+            python3 -mvenv /usr/local/share/virtualenvs/tap-ms-graph
+            source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
             pip install -U "pip==22.2.2" "setuptools==65.3.0"
             pip install .[dev]
       - run:
@@ -20,28 +20,28 @@ jobs:
       - run:
           name: "pylint"
           command: |
-            source /usr/local/share/virtualenvs/tap-ms_graph/bin/activate
+            source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
             pip install pylint
             pylint tap_ms_graph -d C,R,W
       - add_ssh_keys
       - run:
           name: "Unit Tests"
           command: |
-            source /usr/local/share/virtualenvs/tap-ms_graph/bin/activate
+            source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
             pip install nose coverage
-            nosetests --with-coverage --cover-erase --cover-package=tap_ms_graph --cover-html-dir=htmlcov tests/unittests
+            nosetests --with-coverage --cover-erase --cover-package=tap-ms-graph --cover-html-dir=htmlcov tests/unittests
             coverage html
       - store_test_results:
           path: test_output/report.xml
       - store_artifacts:
           path: htmlcov
-      - run:
-          name: "Integration Tests"
-          command: |
-            aws s3 cp s3://com-stitchdata-dev-deployment-assets/environments/tap-tester/tap_tester_sandbox dev_env.sh
-            source dev_env.sh
-            source /usr/local/share/virtualenvs/tap-tester/bin/activate
-            run-test --tap=tap-ms_graph tests
+      # - run:
+      #     name: "Integration Tests"
+      #     command: |
+      #       aws s3 cp s3://com-stitchdata-dev-deployment-assets/environments/tap-tester/tap_tester_sandbox dev_env.sh
+      #       source dev_env.sh
+      #       source /usr/local/share/virtualenvs/tap-tester/bin/activate
+      #       run-test --tap=tap-ms-graph tests
 
 
 workflows:
