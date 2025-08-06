@@ -71,10 +71,10 @@ def test_raise_for_error_exceptions(response_data, expected_exception, expected_
 @pytest.fixture
 def client_config():
     return {
-        "user_agent": "singer",
         "client_id": "mocked_client_id",
         "client_secret": "mocked_secret",
-        "tenant_id": "mocked_tenant"
+        "tenant_id": "mocked_tenant",
+        "scope": "mocked_scope"
     }
 
 
