@@ -93,7 +93,7 @@ class Client:
             body={
                 "client_id": self.config["client_id"],
                 "client_secret": self.config["client_secret"],
-                "scope": "https://graph.microsoft.com/.default",
+                "scope": self.config["scope"],
                 "grant_type": "client_credentials"
             },
             is_auth_req=False
