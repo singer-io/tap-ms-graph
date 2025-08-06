@@ -28,9 +28,8 @@ jobs:
           name: "Unit Tests"
           command: |
             source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
-            pip install nose coverage
-            nosetests --with-coverage --cover-erase --cover-package=tap-ms-graph --cover-html-dir=htmlcov tests/unittests
-            coverage html
+            pip install pytest pytest-cov
+            pytest tests/unittests --cov=tap_ms_graph --cov-report=html --cov-report=term --junitxml=test_output/report.xml
       - store_test_results:
           path: test_output/report.xml
       - store_artifacts:
