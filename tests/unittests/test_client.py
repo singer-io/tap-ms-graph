@@ -7,11 +7,11 @@ from requests.exceptions import ConnectionError, Timeout, ChunkedEncodingError
 from tap_ms_graph.client import Client, raise_for_error
 from tap_ms_graph.exceptions import (
     ERROR_CODE_EXCEPTION_MAPPING,
-    MS_GraphError,
-    MS_GraphUnauthorizedError,
-    MS_GraphBadRequestError,
-    MS_GraphRateLimitError,
-    MS_GraphInternalServerError,
+    MsGraphError,
+    MsGraphUnauthorizedError,
+    MsGraphBadRequestError,
+    MsGraphRateLimitError,
+    MsGraphInternalServerError,
 )
 
 
@@ -45,18 +45,18 @@ def test_raise_for_error_success(status_code):
 @pytest.mark.parametrize(
     "response_data, expected_exception, expected_msg_part",
     [
-        ({"code": "BadRequest", "details": "Invalid input"}, MS_GraphBadRequestError, "HTTP-error-code: 400"),
-        ({"message": "Unauthorized access"}, MS_GraphUnauthorizedError, "Unauthorized access"),
-        (None, MS_GraphInternalServerError, "HTTP-error-code: 500"),
-        ({"message": "Unknown error received from the API."}, MS_GraphError, "Unknown error"),
+        ({"code": "BadRequest", "details": "Invalid input"}, MsGraphBadRequestError, "HTTP-error-code: 400"),
+        ({"message": "Unauthorized access"}, MsGraphUnauthorizedError, "Unauthorized access"),
+        (None, MsGraphInternalServerError, "HTTP-error-code: 500"),
+        ({"message": "Unknown error received from the API."}, MsGraphError, "Unknown error"),
     ],
 )
 def test_raise_for_error_exceptions(response_data, expected_exception, expected_msg_part):
     code_map = {
-        MS_GraphBadRequestError: 400,
-        MS_GraphUnauthorizedError: 401,
-        MS_GraphInternalServerError: 500,
-        MS_GraphError: 418,
+        MsGraphBadRequestError: 400,
+        MsGraphUnauthorizedError: 401,
+        MsGraphInternalServerError: 500,
+        MsGraphError: 418,
     }
     status_code = code_map[expected_exception]
     if status_code == 418 and 418 in ERROR_CODE_EXCEPTION_MAPPING:
@@ -157,7 +157,7 @@ class TestClientRequests:
             get_response(429, {}, headers={"Retry-After": retry_after}, raise_error=True)
         ] * 5
 
-        with pytest.raises(MS_GraphRateLimitError):
+        with pytest.raises(MsGraphRateLimitError):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
@@ -169,7 +169,7 @@ class TestClientRequests:
         full_url = f"{self.base_url}{endpoint}"
         mock_request.side_effect = [mock_token, get_response(401, {}, raise_error=True)]
 
-        with pytest.raises(MS_GraphUnauthorizedError) as excinfo:
+        with pytest.raises(MsGraphUnauthorizedError) as excinfo:
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
@@ -192,7 +192,7 @@ class TestClientRequests:
             )
         ] * 5
 
-        with pytest.raises(MS_GraphRateLimitError):
+        with pytest.raises(MsGraphRateLimitError):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
