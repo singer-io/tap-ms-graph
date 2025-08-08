@@ -7,17 +7,53 @@
         "null"
       ]
     },
-    "displayName": {
+    "deletedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "classification": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "createdDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "creationOptions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
     },
     "description": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expirationDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
     },
     "groupTypes": {
       "type": [
@@ -28,11 +64,18 @@
         "type": "string"
       }
     },
+    "isAssignableToRole": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
     "mail": {
       "type": [
         "string",
         "null"
-      ]
+      ],
+      "format": "email"
     },
     "mailEnabled": {
       "type": [
@@ -46,11 +89,91 @@
         "null"
       ]
     },
-    "securityEnabled": {
+    "membershipRule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "membershipRuleProcessingState": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesDomainName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesLastSyncDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "onPremisesNetBiosName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSamAccountName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSecurityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "onPremisesSyncEnabled": {
       "type": [
         "boolean",
         "null"
       ]
+    },
+    "preferredDataLocation": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "preferredLanguage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "proxyAddresses": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "renewedDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "resourceBehaviorOptions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
     },
     "resourceProvisioningOptions": {
       "type": [
@@ -61,11 +184,53 @@
         "type": "string"
       }
     },
+    "securityEnabled": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "securityIdentifier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "theme": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "uniqueName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "visibility": {
       "type": [
         "string",
         "null"
       ]
+    },
+    "onPremisesProvisioningErrors": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "serviceProvisioningErrors": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object"
+      }
     }
   },
   "additionalProperties": false

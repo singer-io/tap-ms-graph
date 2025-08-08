@@ -2,20 +2,22 @@
   "type": "object",
   "properties": {
     "id": {
-      "type": "string"
-    },
-    "deletedDateTime": {
       "type": [
         "string",
         "null"
-      ],
-      "format": "date-time"
+      ]
     },
     "description": {
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "displayName": {
-      "type": "string"
+      "type": [
+        "string",
+        "null"
+      ]
     }
   },
   "additionalProperties": true
