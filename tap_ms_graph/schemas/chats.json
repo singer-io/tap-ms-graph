@@ -33,19 +33,7 @@
         "null"
       ]
     },
-    "webUrl": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "tenantId": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
-    "viewpoint": {
+    "chatViewpoint": {
       "type": [
         "object",
         "null"
@@ -64,7 +52,21 @@
           ],
           "format": "date-time"
         }
-      }
+      },
+      "additionalProperties": false
+    },
+    "webUrl": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "isHiddenForAllMembers": {
+      "type": [
+        "boolean",
+        "null"
+      ]
     }
-  }
+  },
+  "additionalProperties": false
 }

@@ -24,7 +24,7 @@ This tap:
 
     - [ConditionalAccessPolicies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)
 
-    - [Contacts](https://learn.microsoft.com/en-us/graph/api/contact-delta)
+    - [Contacts](https://learn.microsoft.com/en-us/graph/api/user-list-contacts?view=graph-rest-1.0&tabs=http)
 
     - [DirectoryRoleMember](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
 
@@ -32,7 +32,7 @@ This tap:
 
     - [DirectoryRoles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
 
-    - [DriveItems](https://learn.microsoft.com/en-us/graph/api/driveitem-delta)
+    - [DriveItems](https://learn.microsoft.com/en-us/graph/api/drive-get?view=graph-rest-1.0&tabs=http)
 
     - [Drives](https://learn.microsoft.com/en-us/graph/api/drive-list)
 
@@ -48,12 +48,12 @@ This tap:
 
     - [TeamMember](https://learn.microsoft.com/en-us/graph/api/team-list-members)
 
-    - [Teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)
+    - [Teams](https://learn.microsoft.com/en-us/graph/teams-list-all-teams)
 
     - [Users](https://learn.microsoft.com/en-us/graph/api/user-list)
 
 - Outputs the schema for each resource
-- FULL_TABLE pulls data based on the input state
+- FULL_TABLE replication pulls all records from the source every time
 
 
 ## Streams
@@ -99,7 +99,7 @@ This tap:
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-[contacts](https://learn.microsoft.com/en-us/graph/api/contact-delta)
+[contacts](https://learn.microsoft.com/en-us/graph/api/user-list-contacts?view=graph-rest-1.0&tabs=http)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
@@ -119,7 +119,7 @@ This tap:
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-[drive_items](https://learn.microsoft.com/en-us/graph/api/driveitem-delta)
+[drive_items](https://learn.microsoft.com/en-us/graph/api/drive-get?view=graph-rest-1.0&tabs=http)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
@@ -154,7 +154,7 @@ This tap:
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-[team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members)
+[team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members?view=graph-rest-1.0&tabs=http)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
