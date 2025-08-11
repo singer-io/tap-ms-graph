@@ -1,1 +1,456 @@
-{}
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "deletedDateTime": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "applicationTemplateId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "disabledByMicrosoftStatus": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "createdDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "description": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "groupMembershipClaims": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "identifierUris": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "isDeviceOnlyAuthSupported": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "isFallbackPublicClient": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "nativeAuthenticationApisEnabled": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "notes": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "publisherDomain": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "serviceManagementReference": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "signInAudience": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "tags": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokenEncryptionKeyId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "uniqueName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "samlMetadataUrl": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "defaultRedirectUri": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "certification": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "optionalClaims": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "requestSignatureVerification": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "addIns": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "acceptMappedClaims": {
+          "type": [
+            "null",
+            "boolean"
+          ]
+        },
+        "knownClientApplications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requestedAccessTokenVersion": {
+          "type": [
+            "null",
+            "integer"
+          ]
+        },
+        "oauth2PermissionScopes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "preAuthorizedApplications": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "appRoles": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "logoUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "marketingUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "privacyStatementUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "supportUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "termsOfServiceUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
+    },
+    "keyCredentials": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "parentalControlSettings": {
+      "type": "object",
+      "properties": {
+        "countriesBlockedForMinors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "legalAgeGroupRule": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
+    },
+    "passwordCredentials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "customKeyIdentifier": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "displayName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "endDateTime": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "hint": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "keyId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "secretText": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "startDateTime": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "publicClient": {
+      "type": "object",
+      "properties": {
+        "redirectUris": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requiredResourceAccess": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resourceAppId": {
+            "type": "string"
+          },
+          "resourceAccess": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "verifiedPublisher": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "verifiedPublisherId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "addedDateTime": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "format": "date-time"
+        }
+      }
+    },
+    "web": {
+      "type": "object",
+      "properties": {
+        "homePageUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "logoutUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "redirectUris": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "implicitGrantSettings": {
+          "type": "object",
+          "properties": {
+            "enableAccessTokenIssuance": {
+              "type": "boolean"
+            },
+            "enableIdTokenIssuance": {
+              "type": "boolean"
+            }
+          }
+        },
+        "redirectUriSettings": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "servicePrincipalLockConfiguration": {
+      "type": "object",
+      "properties": {
+        "isEnabled": {
+          "type": "boolean"
+        },
+        "allProperties": {
+          "type": "boolean"
+        },
+        "credentialsWithUsageVerify": {
+          "type": "boolean"
+        },
+        "credentialsWithUsageSign": {
+          "type": "boolean"
+        },
+        "identifierUris": {
+          "type": "boolean"
+        },
+        "tokenEncryptionKeyId": {
+          "type": "boolean"
+        }
+      }
+    },
+    "spa": {
+      "type": "object",
+      "properties": {
+        "redirectUris": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

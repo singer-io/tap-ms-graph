@@ -1,32 +1,36 @@
 {
   "type": "object",
   "properties": {
-    "@odata.type": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
     "id": {
       "type": [
         "string",
         "null"
       ]
     },
-    "team_id": {
+    "user_id": {
       "type": [
         "string",
         "null"
       ]
     },
-    "roles": {
+    "parentFolderId": {
       "type": [
-        "array",
+        "string",
+        "null"
+      ]
+    },
+    "birthday": {
+      "type": [
+        "string",
         "null"
       ],
-      "items": {
-        "type": "string"
-      }
+      "format": "date-time"
+    },
+    "fileAs": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "displayName": {
       "type": [
@@ -34,18 +38,17 @@
         "null"
       ]
     },
-    "userId": {
+    "givenName": {
       "type": [
         "string",
         "null"
       ]
     },
-    "email": {
+    "initials": {
       "type": [
         "string",
         "null"
       ]
     }
-  },
-  "additionalProperties": false
+  }
 }

@@ -9,5 +9,6 @@ class AuditLogsDirectory(FullTableStream):
     tap_stream_id = "audit_logs_directory"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
+    replication_keys = []
     data_key = "value"
     path = "auditLogs/directoryAudits"

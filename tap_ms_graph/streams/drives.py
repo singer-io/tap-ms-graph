@@ -5,10 +5,10 @@ from tap_ms_graph.streams.abstracts import FullTableStream
 LOGGER = get_logger()
 
 
-class DirectoryRoles(FullTableStream):
-    tap_stream_id = "directory_roles"
+class Drives(FullTableStream):
+    tap_stream_id = "drives"
     key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    path = "directoryRoles"
+    path = "drives"

@@ -1,4 +1,4 @@
-# tap-ms_graph
+# tap-ms-graph
 
 This is a [Singer](https://singer.io) tap that produces JSON-formatted data
 following the [Singer
@@ -8,109 +8,165 @@ This tap:
 
 - Pulls raw data from the [MS_Graph API].
 - Extracts the following resources:
-    - [Users](https://learn.microsoft.com/en-us/graph/api/user-delta)
+    - [Applications](https://learn.microsoft.com/en-us/graph/api/application-list)
 
-    - [Groups](https://learn.microsoft.com/en-us/graph/api/group-delta)
+    - [AuditLogsDirectory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)
+
+    - [AuditLogsSignins](https://learn.microsoft.com/en-us/graph/api/signin-list)
+
+    - [CalendarEvents](https://learn.microsoft.com/en-us/graph/api/user-list-events)
+
+    - [Channel](https://learn.microsoft.com/en-us/graph/api/channel-list)
+
+    - [ChatMessages](https://learn.microsoft.com/en-us/graph/api/chat-list-messages)
+
+    - [Chats](https://learn.microsoft.com/en-us/graph/api/chat-list)
+
+    - [ConditionalAccessPolicies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)
+
+    - [Contacts](https://learn.microsoft.com/en-us/graph/api/user-list-contacts?view=graph-rest-1.0&tabs=http)
+
+    - [DirectoryRoleMember](https://learn.microsoft.com/en-us/graph/api/directoryrole-list-members)
+
+    - [DirectoryRoleTemplates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)
+
+    - [DirectoryRoles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
+
+    - [DriveItems](https://learn.microsoft.com/en-us/graph/api/drive-get?view=graph-rest-1.0&tabs=http)
+
+    - [Drives](https://learn.microsoft.com/en-us/graph/api/drive-list)
 
     - [GroupMember](https://learn.microsoft.com/en-us/graph/api/group-list-members)
 
     - [GroupOwner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)
 
-    - [DirectoryRoles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
+    - [Groups](https://learn.microsoft.com/en-us/graph/api/group-list)
 
-    - [DirectoryRoleMember](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
-
-    - [Applications](https://learn.microsoft.com/en-us/graph/api/application-list)
+    - [MailMessages](https://learn.microsoft.com/en-us/graph/api/user-list-messages)
 
     - [ServicePrincipals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)
 
-    - [ConditionalAccessPolicies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)
-
-    - [AuditLogsSignins](https://learn.microsoft.com/en-us/graph/api/signin-list)
-
-    - [AuditLogsDirectory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)
-
-    - [Teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)
-
     - [TeamMember](https://learn.microsoft.com/en-us/graph/api/team-list-members)
 
-    - [Channel](https://learn.microsoft.com/en-us/graph/api/channel-list)
+    - [Teams](https://learn.microsoft.com/en-us/graph/teams-list-all-teams)
+
+    - [Users](https://learn.microsoft.com/en-us/graph/api/user-list)
 
 - Outputs the schema for each resource
-- Incrementally pulls data based on the input state
+- FULL_TABLE replication pulls all records from the source every time
 
 
 ## Streams
 
 
-** [users](https://learn.microsoft.com/en-us/graph/api/user-delta)**
-- Data Key = value
-- Primary keys: ['id']
-- Replication strategy: INCREMENTAL
-
-** [groups](https://learn.microsoft.com/en-us/graph/api/group-delta)**
-- Data Key = value
-- Primary keys: ['id']
-- Replication strategy: INCREMENTAL
-
-** [group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)**
-- Data Key = value
-- Primary keys: ['group_id', 'id']
-- Replication strategy: FULL_TABLE
-
-** [group_owner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)**
-- Data Key = value
-- Primary keys: ['group_id', 'id']
-- Replication strategy: FULL_TABLE
-
-** [directory_roles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)**
+[applications](https://learn.microsoft.com/en-us/graph/api/application-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)**
-- Data Key = value
-- Primary keys: ['role_id', 'id']
-- Replication strategy: FULL_TABLE
-
-** [applications](https://learn.microsoft.com/en-us/graph/api/application-list)**
+[audit_logs_directory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [service_principals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)**
+[audit_logs_signins](https://learn.microsoft.com/en-us/graph/api/signin-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [conditional_access_policies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)**
+[calendar_events](https://learn.microsoft.com/en-us/graph/api/user-list-events)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [audit_logs_signins](https://learn.microsoft.com/en-us/graph/api/signin-list)**
+[channel](https://learn.microsoft.com/en-us/graph/api/channel-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [audit_logs_directory](https://learn.microsoft.com/en-us/graph/api/directoryaudit-list)**
+[chat_messages](https://learn.microsoft.com/en-us/graph/api/chat-list-messages)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)**
+[chats](https://learn.microsoft.com/en-us/graph/api/chat-list)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members)**
+[conditional_access_policies](https://learn.microsoft.com/en-us/graph/api/conditionalaccessroot-list-policies)
 - Data Key = value
-- Primary keys: ['team_id', 'id']
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-** [channel](https://learn.microsoft.com/en-us/graph/api/channel-list)**
+[contacts](https://learn.microsoft.com/en-us/graph/api/user-list-contacts?view=graph-rest-1.0&tabs=http)
 - Data Key = value
-- Primary keys: ['team_id', 'id']
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list-members)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[directory_role_templates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[directory_roles](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[drive_items](https://learn.microsoft.com/en-us/graph/api/drive-get?view=graph-rest-1.0&tabs=http)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[drives](https://learn.microsoft.com/en-us/graph/api/drive-list)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[group_member](https://learn.microsoft.com/en-us/graph/api/group-list-members)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[group_owner](https://learn.microsoft.com/en-us/graph/api/group-list-owners)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[groups](https://learn.microsoft.com/en-us/graph/api/group-list)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[mail_messages](https://learn.microsoft.com/en-us/graph/api/user-list-messages)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[service_principals](https://learn.microsoft.com/en-us/graph/api/serviceprincipal-list)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[team_member](https://learn.microsoft.com/en-us/graph/api/team-list-members?view=graph-rest-1.0&tabs=http)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[teams](https://learn.microsoft.com/en-us/graph/api/group-list?view=graph-rest-1.0&tabs=http#list-groups)
+- Data Key = value
+- Primary keys: ['id']
+- Replication strategy: FULL_TABLE
+
+[users](https://learn.microsoft.com/en-us/graph/api/user-list)
+- Data Key = value
+- Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
 
@@ -128,7 +184,7 @@ This tap:
     > source venv/bin/activate
     > python setup.py install
     OR
-    > cd .../tap-ms_graph
+    > cd .../tap-ms-graph
     > pip install -e .
     ```
 2. Dependent libraries. The following dependent libraries were installed.
@@ -143,13 +199,13 @@ This tap:
 
 3. Create your tap's `config.json` file.  The tap config file for this tap should include these entries:
    - `start_date` - the default value to use if no bookmark exists for an endpoint (rfc3339 date string)
-   - `user_agent` (string, optional): Process and email for API logging purposes. Example: `tap-ms_graph <api_user_email@your_company.com>`
+   - `user_agent` (string, optional): Process and email for API logging purposes. Example: `tap-ms-graph <api_user_email@your_company.com>`
    - `request_timeout` (integer, `300`): Max time for which request should wait to get a response. Default request_timeout is 300 seconds.
    
     ```json
     {
         "start_date": "2019-01-01T00:00:00Z",
-        "user_agent": "tap-ms_graph <api_user_email@your_company.com>",
+        "user_agent": "tap-ms-graph <api_user_email@your_company.com>",
         "request_timeout": 300,
         ...
     }```
@@ -170,7 +226,7 @@ This tap:
 4. Run the Tap in Discovery Mode
     This creates a catalog.json for selecting objects/fields to integrate:
     ```bash
-    tap-ms_graph --config config.json --discover > catalog.json
+    tap-ms-graph --config config.json --discover > catalog.json
     ```
    See the Singer docs on discovery mode
    [here](https://github.com/singer-io/getting-started/blob/master/docs/DISCOVERY_MODE.md
@@ -179,17 +235,17 @@ This tap:
 
     For Sync mode:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
     To load to json files to verify outputs:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json | target-json > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json | target-json > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
     To pseudo-load to [Stitch Import API](https://github.com/singer-io/target-stitch) with dry run:
     ```bash
-    > tap-ms_graph --config tap_config.json --catalog catalog.json | target-stitch --config target_config.json --dry-run > state.json
+    > tap-ms-graph --config tap_config.json --catalog catalog.json | target-stitch --config target_config.json --dry-run > state.json
     > tail -1 state.json > state.json.tmp && mv state.json.tmp state.json
     ```
 
