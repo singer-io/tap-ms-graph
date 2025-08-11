@@ -7,11 +7,11 @@ LOGGER = get_logger()
 
 class DriveItems(FullTableStream):
     tap_stream_id = "drive_items"
-    key_properties = ["id"]
+    key_properties = ["id", "user_Id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    path = "/users/{user_id}/drives"
+    path = "/users/{user_Id}/drives"
     parent = "users"
 
 

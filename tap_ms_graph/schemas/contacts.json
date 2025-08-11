@@ -1,6 +1,18 @@
 {
   "type": "object",
   "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "user_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "parentFolderId": {
       "type": [
         "string",

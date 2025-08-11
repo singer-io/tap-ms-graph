@@ -39,7 +39,7 @@
     {
       "name": "calendar_events",
       "parent": "users",
-      "key_properties": ["id"],
+      "key_properties": ["id", "user_id"],
       "replication_method": "FULL_TABLE",
       "path": "users/{id}/events",
       "data_key": "value",
@@ -48,7 +48,7 @@
     {
       "name": "channels",
       "parent": "teams",
-      "key_properties": ["id"],
+      "key_properties": ["id","team_id"],
       "replication_method": "FULL_TABLE",
       "path": "teams/{team_id}/channels",
       "data_key": "value",
@@ -57,7 +57,7 @@
     {
       "name": "chat_messages",
       "parent": "chats",
-      "key_properties": ["id"],
+      "key_properties": ["id", "chat_id"],
       "replication_method": "FULL_TABLE",
       "path": "chats/{chat_id}/messages",
       "data_key": "value",
@@ -82,16 +82,16 @@
     {
       "name": "contacts",
       "parent": "users",
-      "key_properties": ["id"],
+      "key_properties": ["id", "user_id"],
       "replication_method": "FULL_TABLE",
-      "path": "users/{id}/contacts",
+      "path": "users/{user_id}/contacts",
       "data_key": "value",
       "doc_link": "https://learn.microsoft.com/en-us/graph/api/contact-list"
     },
     {
       "name": "directory_role_member",
       "parent": "directory_roles",
-      "key_properties": ["id"],
+      "key_properties": ["id", "role_id"],
       "replication_method": "FULL_TABLE",
       "path": "directoryRoles/{role_id}/members",
       "data_key": "value",
@@ -115,10 +115,10 @@
     },
     {
       "name": "drive_items",
-      "parent": "drives",
-      "key_properties": ["id"],
+      "parent": "users",
+      "key_properties": ["user_Id"],
       "replication_method": "FULL_TABLE",
-      "path": "drives/{id}/items",
+      "path": "drives/{user_Id}/items",
       "data_key": "value",
       "doc_link": "https://learn.microsoft.com/en-us/graph/api/driveitem-list"
     },
@@ -133,7 +133,7 @@
     {
       "name": "group_member",
       "parent": "groups",
-      "key_properties": ["id"],
+      "key_properties": ["id", "group_id"],
       "replication_method": "FULL_TABLE",
       "path": "groups/{group_id}/members",
       "data_key": "value",
@@ -142,7 +142,7 @@
     {
       "name": "group_owner",
       "parent": "groups",
-      "key_properties": ["id"],
+      "key_properties": ["id", "group_id"],
       "replication_method": "FULL_TABLE",
       "path": "groups/{group_id}/owners",
       "data_key": "value",
@@ -159,9 +159,9 @@
     {
       "name": "mail_messages",
       "parent": "users",
-      "key_properties": ["id"],
+      "key_properties": ["user_id"],
       "replication_method": "FULL_TABLE",
-      "path": "users/{id}/messages",
+      "path": "users/{user_id}/messages",
       "data_key": "value",
       "doc_link": "https://learn.microsoft.com/en-us/graph/api/message-list"
     },
@@ -176,7 +176,7 @@
     {
       "name": "team_member",
       "parent": "teams",
-      "key_properties": ["id"],
+      "key_properties": ["id", "team_id"],
       "replication_method": "FULL_TABLE",
       "path": "teams/{team_id}/members",
       "data_key": "value",

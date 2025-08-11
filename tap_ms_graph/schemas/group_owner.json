@@ -2,19 +2,37 @@
   "type": "object",
   "properties": {
     "@odata.type": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "id": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "group_id": {
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "businessPhones": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": [
+        "null",
+        "string"
+      ]
       }
     },
     "displayName": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "givenName": {
       "type": [
