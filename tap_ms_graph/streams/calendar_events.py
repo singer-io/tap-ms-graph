@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class CalendarEvents(FullTableStream):
     tap_stream_id = "calendar_events"
-    key_properties = ["id"]
+    key_properties = ["id", "user_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"

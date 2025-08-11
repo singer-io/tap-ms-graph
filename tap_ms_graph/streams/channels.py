@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class Channels(FullTableStream):
     tap_stream_id = "channels"
-    key_properties = ["id"]
+    key_properties = ["id", "team_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"

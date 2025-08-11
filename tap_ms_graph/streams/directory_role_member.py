@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class DirectoryRoleMember(FullTableStream):
     tap_stream_id = "directory_role_member"
-    key_properties = ["id"]
+    key_properties = ["id", "role_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
