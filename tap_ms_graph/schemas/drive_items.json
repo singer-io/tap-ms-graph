@@ -14,6 +14,12 @@
         "null"
       ]
     },
+    "user_Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "id": {
       "type": [
         "string",

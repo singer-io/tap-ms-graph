@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class MailMessages(FullTableStream):
     tap_stream_id = "mail_messages"
-    key_properties = ["id"]
+    key_properties = ["id", "user_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"

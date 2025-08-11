@@ -7,6 +7,12 @@
         "null"
       ]
     },
+    "chat_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "replyToId": {
       "type": [
         "string",

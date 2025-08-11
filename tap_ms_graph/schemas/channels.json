@@ -7,6 +7,12 @@
         "null"
       ]
     },
+    "team_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
     "createdDateTime": {
       "type": [
         "string",
