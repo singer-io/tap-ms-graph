@@ -26,7 +26,7 @@ This tap:
 
     - [Contacts](https://learn.microsoft.com/en-us/graph/api/user-list-contacts?view=graph-rest-1.0&tabs=http)
 
-    - [DirectoryRoleMember](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
+    - [DirectoryRoleMember](https://learn.microsoft.com/en-us/graph/api/directoryrole-list-members)
 
     - [DirectoryRoleTemplates](https://learn.microsoft.com/en-us/graph/api/directoryroletemplate-list)
 
@@ -104,7 +104,7 @@ This tap:
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
 
-[directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list)
+[directory_role_member](https://learn.microsoft.com/en-us/graph/api/directoryrole-list-members)
 - Data Key = value
 - Primary keys: ['id']
 - Replication strategy: FULL_TABLE
