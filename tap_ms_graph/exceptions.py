@@ -29,11 +29,11 @@ class MsGraphNotFoundError(MsGraphError):
     pass
 
 class MsGraphConflictError(MsGraphError):
-    """class representing 406 status code."""
+    """class representing 409 status code."""
     pass
 
 class MsGraphUnprocessableEntityError(MsGraphBackoffError):
-    """class representing 409 status code."""
+    """class representing 422 status code."""
     pass
 
 class MsGraphRateLimitError(MsGraphBackoffError):

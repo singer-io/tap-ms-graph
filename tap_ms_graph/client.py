@@ -32,6 +32,8 @@ def raise_for_error(response: requests.Response) -> None:
         response_json = response.json()
     except Exception:
         response_json = {}
+
+    LOGGER.debug(f"Response Status Code: {response.status_code}")
     if response.status_code not in [200, 201, 204]:
         if response_json.get("error"):
             message = "HTTP-error-code: {}, Error: {}".format(response.status_code, response_json.get("error"))
@@ -128,7 +130,10 @@ class Client:
         return self.__make_request(method, endpoint, headers=headers, params=params, data=body, timeout=self.request_timeout)
 
     def authenticate(self, headers: Dict, params: Dict) -> Tuple[Dict, Dict]:
-        """Authenticates the request with the token"""
+        """Authenticates the request with the token, refreshing it if expired."""
+        if datetime.now() >= self._expires_at:
+            LOGGER.info("Access token expired. Refreshing...")
+            self._get_access_token()
         headers["Authorization"] = self._access_token
         return headers, params
 
@@ -142,7 +147,7 @@ class Client:
         """Calls the make_request method with a prefixed method type `POST`"""
 
         headers, params = self.authenticate(headers, params)
-        self.__make_request("POST", endpoint, headers=headers, params=params, data=body, timeout=self.request_timeout)
+        return self.__make_request("POST", endpoint, headers=headers, params=params, data=body, timeout=self.request_timeout)
 
 
     @backoff.on_exception(
@@ -175,6 +180,7 @@ class Client:
             Dict,List,None: Returns a `Json Parsed` HTTP Response or None if exception
         """
         with metrics.http_request_timer(endpoint) as timer:
+            LOGGER.debug("Ms-Graph Api endpoint: %s, %s, %s", method, endpoint, kwargs)
             response = self._session.request(method, endpoint, **kwargs)
             raise_for_error(response)
 

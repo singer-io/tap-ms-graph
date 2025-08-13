@@ -16,7 +16,5 @@ class Teams(FullTableStream):
 
 
     def get_url_endpoint(self, parent_obj: Dict = None) -> str:
-        """
-        Get the URL endpoint for the stream
-        """
+        """Constructs the API endpoint URL for fetching teams."""
         return f"{self.client.base_url}/{self.path}?{Teams.params}"

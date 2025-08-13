@@ -7,7 +7,7 @@ from tap_ms_graph.sync import sync
 
 LOGGER = singer.get_logger()
 
-REQUIRED_CONFIG_KEYS = ['tenant_id', 'client_id', 'client_secret', 'scope', 'start_date']
+REQUIRED_CONFIG_KEYS = ['tenant_id', 'client_id', 'client_secret', 'scope', 'page_size', 'start_date']
 
 def do_discover():
     """
