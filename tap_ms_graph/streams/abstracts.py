@@ -27,7 +27,6 @@ class BaseStream(ABC):
 
     url_endpoint = ""
     path = ""
-    page_size = 999
     next_page_key = "@odata.nextLink"
     headers = {'Accept': 'application/json'}
     children = []
@@ -44,6 +43,7 @@ class BaseStream(ABC):
         self.child_to_sync = []
         self.params = {}
         self.data_payload = dict()
+        self.page_size = self.client.config.get("page_size", 999)
 
     @property
     @abstractmethod
@@ -126,6 +126,9 @@ class BaseStream(ABC):
         """
         Update params for the stream
         """
+        self.params.update({
+            "$top": self.page_size
+            })
         self.params.update(kwargs)
 
     def modify_object(self, record: Dict, parent_record: Dict = None) -> Dict:
@@ -211,7 +214,7 @@ class IncrementalStream(BaseStream):
 
 
 class FullTableStream(BaseStream):
-    """Base Class for Incremental Stream."""
+    """Base Class for FullTable Stream."""
 
     def sync(
         self,
@@ -222,6 +225,7 @@ class FullTableStream(BaseStream):
         """Abstract implementation for `type: Fulltable` stream."""
         self.url_endpoint = self.get_url_endpoint(parent_obj)
         self.update_data_payload(parent_obj=parent_obj)
+        self.update_params()
         with metrics.record_counter(self.tap_stream_id) as counter:
             for record in self.get_records():
                 transformed_record = transformer.transform(
