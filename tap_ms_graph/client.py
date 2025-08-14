@@ -14,7 +14,6 @@ from tap_ms_graph.exceptions import (
     MsGraphBackoffError,
     MsGraphRateLimitError,
     MsGraphInternalServerError,
-    MsGraphBadGatewayError,
     MsGraphServiceUnavailableError)
 
 LOGGER = get_logger()
