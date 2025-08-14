@@ -13,3 +13,10 @@ class ChatMessages(FullTableStream):
     data_key = "value"
     path = "chats/{chat_id}/messages"
     parent = "chats"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Constructs the API endpoint URL for fetching chat messages for a given chat."""
+        if not parent_obj or 'id' not in parent_obj:
+            raise ValueError("parent_obj must be provided with an 'id' key.")
+        return f"{self.client.base_url}/{self.path.format(chat_id = parent_obj['id'])}"

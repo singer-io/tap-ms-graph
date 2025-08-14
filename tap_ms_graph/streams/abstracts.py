@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Tuple, List
+from typing import Any, Dict, Tuple, Iterator, List
 from singer import (
     Transformer,
     get_bookmark,
@@ -27,13 +27,13 @@ class BaseStream(ABC):
 
     url_endpoint = ""
     path = ""
-    page_size = 1000
     next_page_key = "@odata.nextLink"
     headers = {'Accept': 'application/json'}
     children = []
     parent = ""
     data_key = ""
     parent_bookmark_key = ""
+    http_method = "GET"
 
     def __init__(self, client=None, catalog=None) -> None:
         self.client = client
@@ -42,6 +42,8 @@ class BaseStream(ABC):
         self.metadata = metadata.to_map(catalog.metadata)
         self.child_to_sync = []
         self.params = {}
+        self.data_payload = dict()
+        self.page_size = self.client.config.get("page_size", 999)
 
     @property
     @abstractmethod
@@ -59,7 +61,7 @@ class BaseStream(ABC):
 
     @property
     @abstractmethod
-    def replication_keys(self) -> str:
+    def replication_keys(self) -> List:
         """Defines the replication key for incremental sync mode of a
         stream."""
 
@@ -70,6 +72,7 @@ class BaseStream(ABC):
 
     def is_selected(self):
         return metadata.get(self.metadata, (), "selected")
+
 
     @abstractmethod
     def sync(
@@ -94,9 +97,8 @@ class BaseStream(ABC):
         """
 
 
-    def get_records(self) -> List:
+    def get_records(self) -> Iterator:
         """Interacts with api client interaction and pagination."""
-        self.params[""] = self.page_size
         next_page = 1
         while next_page:
             response = self.client.get(
@@ -104,8 +106,8 @@ class BaseStream(ABC):
             )
             raw_records = response.get(self.data_key, [])
             next_page = response.get(self.next_page_key)
-
-            self.params[self.next_page_key] = next_page
+            if next_page:
+                self.url_endpoint = next_page
             yield from raw_records
 
     def write_schema(self) -> None:
@@ -124,6 +126,9 @@ class BaseStream(ABC):
         """
         Update params for the stream
         """
+        self.params.update({
+            "$top": self.page_size
+            })
         self.params.update(kwargs)
 
     def modify_object(self, record: Dict, parent_record: Dict = None) -> Dict:
@@ -137,6 +142,12 @@ class BaseStream(ABC):
         Get the URL endpoint for the stream
         """
         return self.url_endpoint or f"{self.client.base_url}/{self.path}"
+
+    def update_data_payload(self, parent_obj: Dict = None, **kwargs) -> Dict:
+        """
+        Constructs the JSON body payload for the API request.
+        """
+        self.data_payload.update(kwargs)
 
 
 class IncrementalStream(BaseStream):
@@ -203,7 +214,7 @@ class IncrementalStream(BaseStream):
 
 
 class FullTableStream(BaseStream):
-    """Base Class for Incremental Stream."""
+    """Base Class for FullTable Stream."""
 
     def sync(
         self,
@@ -213,12 +224,14 @@ class FullTableStream(BaseStream):
     ) -> Dict:
         """Abstract implementation for `type: Fulltable` stream."""
         self.url_endpoint = self.get_url_endpoint(parent_obj)
+        self.update_data_payload(parent_obj=parent_obj)
+        self.update_params()
         with metrics.record_counter(self.tap_stream_id) as counter:
             for record in self.get_records():
                 transformed_record = transformer.transform(
                     record, self.schema, self.metadata
                 )
-                if self.is_selected:
+                if self.is_selected():
                     write_record(self.tap_stream_id, transformed_record)
                     counter.increment()
 

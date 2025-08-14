@@ -11,5 +11,10 @@ class Teams(FullTableStream):
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    params = {"$filter": "resourceProvisioningOptions/Any(x:x eq \u0027Team\u0027)"}
+    params = "$filter=resourceProvisioningOptions/Any(x:x eq 'Team')"
     path = "groups"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Constructs the API endpoint URL for fetching teams."""
+        return f"{self.client.base_url}/{self.path}?{Teams.params}"

@@ -13,3 +13,10 @@ class Contacts(FullTableStream):
     data_key = "value"
     path = "users/{user_id}/contacts"
     parent = "users"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Constructs the API endpoint URL for fetching contacts for a given user."""
+        if not parent_obj or 'id' not in parent_obj:
+            raise ValueError("parent_obj must be provided with an 'id' key.")
+        return f"{self.client.base_url}/{self.path.format(user_id = parent_obj['id'])}"

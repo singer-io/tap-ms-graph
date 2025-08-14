@@ -13,3 +13,10 @@ class GroupOwner(FullTableStream):
     data_key = "value"
     path = "groups/{group_id}/owners"
     parent = "groups"
+
+
+    def get_url_endpoint(self, parent_obj: Dict = None) -> str:
+        """Constructs the API endpoint URL for fetching group owner for a given group."""
+        if not parent_obj or 'id' not in parent_obj:
+            raise ValueError("parent_obj must be provided with an 'id' key.")
+        return f"{self.client.base_url}/{self.path.format(group_id = parent_obj['id'])}"

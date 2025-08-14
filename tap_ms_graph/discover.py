@@ -16,14 +16,13 @@ def discover() -> Catalog:
     for stream_name, schema_dict in schemas.items():
         try:
             schema = Schema.from_dict(schema_dict)
-            mdata = field_metadata[stream_name]
+            stream_metadata = field_metadata[stream_name]
         except Exception as err:
-            LOGGER.error(err)
-            LOGGER.error("stream_name: {}".format(stream_name))
-            LOGGER.error("type schema_dict: {}".format(type(schema_dict)))
+            LOGGER.error(f"Error processing stream '{stream_name}'")
+            LOGGER.error(f"type schema_dict: {type(schema_dict)}")
             raise err
 
-        key_properties = metadata.to_map(mdata).get((), {}).get("table-key-properties")
+        key_properties = metadata.to_map(stream_metadata).get((), {}).get("table-key-properties")
 
         catalog.streams.append(
             CatalogEntry(
@@ -31,7 +30,7 @@ def discover() -> Catalog:
                 tap_stream_id=stream_name,
                 key_properties=key_properties,
                 schema=schema,
-                metadata=mdata,
+                metadata=stream_metadata,
             )
         )
 

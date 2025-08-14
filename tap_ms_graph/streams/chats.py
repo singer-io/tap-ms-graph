@@ -12,3 +12,4 @@ class Chats(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "chats"
+    children = ["chat_messages"]

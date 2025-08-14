@@ -12,3 +12,4 @@ class Groups(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "groups"
+    children = ["group_owner", "group_member"]
