@@ -160,7 +160,6 @@ class Client:
             Timeout,
             MsGraphRateLimitError,
             MsGraphInternalServerError,
-            MsGraphBadGatewayError,
             MsGraphServiceUnavailableError,
             MsGraphBackoffError
         ),
@@ -180,7 +179,7 @@ class Client:
             Dict,List,None: Returns a `Json Parsed` HTTP Response or None if exception
         """
         with metrics.http_request_timer(endpoint) as timer:
-            LOGGER.debug("Ms-Graph Api endpoint: %s, %s, %s", method, endpoint, kwargs)
+            LOGGER.debug("Ms-Graph Api endpoint: %s, %s", method, endpoint)
             response = self._session.request(method, endpoint, **kwargs)
             raise_for_error(response)
 
