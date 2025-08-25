@@ -300,8 +300,36 @@ def test_token_reuse_if_not_expired(mock_request, client_config, mock_token):
     Test that the client reuses the access token without refetching
     it if the token has not expired yet.
     """
+    # Simulate token fetch
     mock_get_response = MagicMock()
     mock_get_response.status_code = 200
     mock_get_response.json.return_value = {"data": "fake response"}
 
-    mock_request.side
+    # Token fetch + two data requests
+    mock_request.side_effect = [mock_token, mock_get_response, mock_get_response]
+
+    client = Client(client_config)
+
+    # Fetch token explicitly
+    client._get_access_token()
+
+    # First request
+    client.make_request(
+        method="GET",
+        endpoint="https://fake.local/test",
+        headers={"Some-Header": "value"},
+        params={"test": 123},
+    )
+
+    # Advance time but still within token validity (30 minutes later)
+    with freeze_time("2025-01-01 12:30:00"):
+        client.make_request(
+            method="GET",
+            endpoint="https://fake.local/test",
+            headers={"Some-Header": "value"},
+            params={"test": 456},
+        )
+
+    # Token fetch once, and 2 GET calls
+    assert mock_request.call_count == 3
+
