@@ -17,7 +17,8 @@ setup(name="tap-ms-graph",
       ],
         extras_require={
             "dev": [
-            "pytest>=7.0.0",
+                "pytest>=7.0.0",
+                "freezegun",
             ],
         },
       entry_points="""
