@@ -19,4 +19,4 @@ class DriveItems(FullTableStream):
         """Constructs the API endpoint URL for fetching drive items for a given user."""
         if not parent_obj or 'id' not in parent_obj:
             raise ValueError("parent_obj must be provided with an 'id' key.")
-        return f"{self.client.base_url}/{self.path.format(user_id = parent_obj['id'])}"
+        return f"{self.client.base_url}/{self.path.format(user_Id = parent_obj['id'])}"
