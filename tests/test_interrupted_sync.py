@@ -17,7 +17,7 @@ class MS_GraphInterruptedSyncTest(MS_GraphBaseTest):
 
     def manipulate_state(self):
         return {
-            "currently_syncing": "prospects",
+            "currently_syncing": "users",
             "bookmarks": {
                 "users": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
                 "groups": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
