@@ -48,14 +48,14 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 1000
             },
             "group_member": {
-                cls.PRIMARY_KEYS: { "group_id, id" },
+                cls.PRIMARY_KEYS: { "group_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 1000
             },
             "group_owner": {
-                cls.PRIMARY_KEYS: { "group_id, id" },
+                cls.PRIMARY_KEYS: { "group_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
@@ -69,7 +69,7 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 1000
             },
             "directory_role_member": {
-                cls.PRIMARY_KEYS: { "role_id, id" },
+                cls.PRIMARY_KEYS: { "role_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
