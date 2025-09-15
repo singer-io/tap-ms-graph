@@ -29,7 +29,14 @@ jobs:
           command: |
             source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
             pip install pytest pytest-cov
-            pytest --cov=tap_ms_graph --cov-report=html --cov-report=term tests/unittests
+            mkdir -p test_output
+            pytest \
+              --cov=tap_ms_graph \
+              --cov-report=html \
+              --cov-report=term \
+              --cov-report=xml:test_output/coverage.xml \
+              --junitxml=test_output/report.xml \
+              tests/unittests
       - store_test_results:
           path: test_output/report.xml
       - store_artifacts:
