@@ -20,3 +20,10 @@ class DirectoryRoleMember(FullTableStream):
         if not parent_obj or 'id' not in parent_obj:
             raise ValueError("parent_obj must be provided with an 'id' key.")
         return f"{self.client.base_url}/{self.path.format(role_id = parent_obj['id'])}"
+
+
+    def update_params(self, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        self.params.update(kwargs)

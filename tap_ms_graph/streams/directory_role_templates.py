@@ -12,3 +12,10 @@ class DirectoryRoleTemplates(FullTableStream):
     replication_keys = []
     data_key = "value"
     path = "directoryRoleTemplates"
+
+
+    def update_params(self, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        self.params.update(kwargs)

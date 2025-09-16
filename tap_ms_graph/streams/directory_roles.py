@@ -13,3 +13,10 @@ class DirectoryRoles(FullTableStream):
     data_key = "value"
     path = "directoryRoles"
     children = ["directory_role_member"]
+
+
+    def update_params(self, **kwargs) -> None:
+        """
+        Update params for the stream
+        """
+        self.params.update(kwargs)
