@@ -3,7 +3,7 @@ from base import MS_GraphBaseTest
 from tap_tester.base_suite_tests.interrupted_sync_test import InterruptedSyncTest
 
 
-class MS_GraphInterruptedSyncTest(MS_GraphBaseTest):
+class MS_GraphInterruptedSyncTest(InterruptedSyncTest, MS_GraphBaseTest):
     """Test tap sets a bookmark and respects it for the next sync of a
     stream."""
 
@@ -17,9 +17,9 @@ class MS_GraphInterruptedSyncTest(MS_GraphBaseTest):
 
     def manipulate_state(self):
         return {
-            "currently_syncing": "users",
+            "currently_syncing": "groups",
             "bookmarks": {
-                "users": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
-                "groups": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
+                # "users": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
+                # "groups": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
         }
     }

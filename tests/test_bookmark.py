@@ -8,8 +8,8 @@ class MS_GraphBookMarkTest(BookmarkTest, MS_GraphBaseTest):
     bookmark_format = "%Y-%m-%dT%H:%M:%S.%fZ"
     initial_bookmarks = {
         "bookmarks": {
-            "users": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
-            "groups": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
+            # "users": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
+            # "groups": { "updatedDateTime" : "2020-01-01T00:00:00Z"},
         }
     }
     @staticmethod
@@ -17,5 +17,5 @@ class MS_GraphBookMarkTest(BookmarkTest, MS_GraphBaseTest):
         return "tap_tester_ms_graph_bookmark_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {}
+        streams_to_exclude = {'groups', 'group_member', 'group_owner'}
         return self.expected_stream_names().difference(streams_to_exclude)

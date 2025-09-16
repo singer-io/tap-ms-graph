@@ -46,6 +46,7 @@ def get_schemas() -> Tuple[Dict, Dict]:
 
     refs = load_schema_references()
     for stream_name, stream_obj in STREAMS.items():
+        LOGGER.info('stream_name:-  %s', stream_name)
         schema_path = get_abs_path("schemas/{}.json".format(stream_name))
         with open(schema_path) as file:
             schema = json.load(file)

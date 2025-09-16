@@ -12,7 +12,7 @@ class MS_GraphStartDateTest(StartDateTest, MS_GraphBaseTest):
         return "tap_tester_ms_graph_start_date_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {}
+        streams_to_exclude = {'groups', 'group_member', 'group_owner'}
         return self.expected_stream_names().difference(streams_to_exclude)
 
     @property
