@@ -3,7 +3,7 @@ from base import MS_GraphBaseTest
 from tap_tester.base_suite_tests.interrupted_sync_test import InterruptedSyncTest
 
 
-class MS_GraphInterruptedSyncTest(MS_GraphBaseTest):
+class MS_GraphInterruptedSyncTest(InterruptedSyncTest, MS_GraphBaseTest):
     """Test tap sets a bookmark and respects it for the next sync of a
     stream."""
 

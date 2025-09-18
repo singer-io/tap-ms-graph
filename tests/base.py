@@ -35,101 +35,101 @@ class MS_GraphBaseTest(BaseCase):
         return {
             "users": {
                 cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedDateTime" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "groups": {
                 cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.INCREMENTAL,
-                cls.REPLICATION_KEYS: { "updatedDateTime" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "group_member": {
                 cls.PRIMARY_KEYS: { "group_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "group_owner": {
                 cls.PRIMARY_KEYS: { "group_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "directory_roles": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "directory_role_member": {
                 cls.PRIMARY_KEYS: { "role_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "applications": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "service_principals": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "conditional_access_policies": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
-            "audit_logs_signins": {
+            "audit_logs_signIns": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "audit_logs_directory": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "teams": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "team_member": {
                 cls.PRIMARY_KEYS: { "team_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             },
             "channel": {
                 cls.PRIMARY_KEYS: { "team_id", "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 1000
+                cls.API_LIMIT: 999
             }
         }
 
@@ -137,7 +137,7 @@ class MS_GraphBaseTest(BaseCase):
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'tenant_id': 'AZURE_TENANT_ID', 'client_id': 'AZURE_CLIENT_ID', 'client_secret': 'AZURE_CLIENT_SECRET'}
+        creds = {'tenant_id': 'AZURE_TENANT_ID', 'client_id': 'AZURE_CLIENT_ID', 'client_secret': 'AZURE_CLIENT_SECRET', 'scope': 'AZURE_SCOPE'}
 
         for cred in creds:
             credentials_dict[cred] = os.getenv(creds[cred])
