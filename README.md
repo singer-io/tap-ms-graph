@@ -175,7 +175,7 @@ This tap:
     ```
     To use Microsoft Graph APIs for sync and data access, ensure your tenant has the required licenses.
 
-        | **Graph API / Feature**                 | **Required License**                       | **Notes**                                              |
+        | **Graph API / Feature**                | **Required License**                       | **Notes**                                              |
         |----------------------------------------|--------------------------------------------|--------------------------------------------------------|
         | **Mail, Calendar, Contacts**           | M365 Business Basic or higher              | Access via `Mail.Read`, `Calendars.Read`, etc.         |
         | **Azure AD Directory Sync**            | Azure AD Premium P1 or P2                  | Needed for advanced directory features                 |
