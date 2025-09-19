@@ -171,20 +171,19 @@ This tap:
 
 
 
-## Prerequsite
-    ```
+## Prerequisite
     To use Microsoft Graph APIs for sync and data access, ensure your tenant has the required licenses.
 
-        | **Graph API / Feature**                | **Required License**                       | **Notes**                                              |
-        |----------------------------------------|--------------------------------------------|--------------------------------------------------------|
-        | **Mail, Calendar, Contacts**           | M365 Business Basic or higher              | Access via `Mail.Read`, `Calendars.Read`, etc.         |
-        | **Azure AD Directory Sync**            | Azure AD Premium P1 or P2                  | Needed for advanced directory features                 |
-        | **Audit Logs (30–365 days)**           | AAD P1/P2 or M365 E5                       | For extended retention and compliance                  |
-        | **Teams Messages (Chats, Channels)**   | M365 E5 + Microsoft approval               | Protected APIs; app access needs justification         |
-        | **Webhooks / Change Notifications**    | Any M365 license                           | For real-time sync triggers                            |
-        | **Data Sync APIs (Delta Queries)**     | Any M365 license                           | Available for users, groups, mail, etc.                |
+| **Graph API / Feature**                  | **Required License**                       | **Notes**                                              |
+|------------------------------------------|--------------------------------------------|--------------------------------------------------------|
+| `Mail`, `Calendar`, `Contacts`           | M365 Business Basic or higher              | Access via `Mail.Read`, `Calendars.Read`, etc.         |
+| `Azure AD Directory Sync`                | Azure AD Premium P1 or P2                  | Needed for advanced directory features                 |
+| `Audit Logs` (30–365 days)               | AAD P1/P2 or M365 E5                       | For extended retention and compliance                  |
+| `Teams Messages` (`Chats`, `Channels`)   | M365 E5 + Microsoft approval               | Protected APIs; app access needs justification         |
+| `Webhooks`, `Change Notifications`       | Any M365 license                           | For real-time sync triggers                            |
+| `Data Sync APIs` (Delta Queries)         | Any M365 license                           | Available for `users`, `groups`, `mail`, etc.          |
 
-    ```
+
 
 ## Quick Start
 
