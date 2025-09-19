@@ -279,7 +279,7 @@ This tap:
     ```
     pip install -e .'[dev]'
     ```
-7.  Sync features require upgraded licenses that go beyond what's available in the free trial. Specifically, the following licenses are required:
+7.  Sync features required folowing licenses:
     Microsoft 365 Business Basic or above – for accessing user mail, calendar, and contacts
     Azure AD Premium P1/P2 – for directory features and audit log retention
     Microsoft 365 E5 – required for accessing Teams messages, advanced audit logs, and compliance APIs
