@@ -204,21 +204,20 @@ This tap:
    
     ```json
     {
-        "start_date": "2019-01-01T00:00:00Z",
-        "user_agent": "tap-ms-graph <api_user_email@your_company.com>",
-        "request_timeout": 300,
-        ...
-    }```
-
+        "tenant_id": "AZURE_TENANT_ID",
+        "client_id": "AZURE_CLIENT_ID",
+        "client_secret": "AZURE_CLIENT_SECRET",
+        "scope": "AZURE_SCOPE"
+    }
+    ```
     Optionally, also create a `state.json` file. `currently_syncing` is an optional attribute used for identifying the last object to be synced in case the job is interrupted mid-stream. The next run would begin where the last job left off.
 
     ```json
     {
-        "currently_syncing": "engage",
+        "currently_syncing": "users",
         "bookmarks": {
-            "export": "2019-09-27T22:34:39.000000Z",
-            "funnels": "2019-09-28T15:30:26.000000Z",
-            "revenue": "2019-09-28T18:23:53Z"
+            "groups": "2019-09-27T22:34:39.000000Z",
+            "teams": "2019-09-28T15:30:26.000000Z",
         }
     }
     ```
@@ -280,6 +279,10 @@ This tap:
     ```
     pip install -e .'[dev]'
     ```
+7.  Sync features require upgraded licenses that go beyond what's available in the free trial. Specifically, the following licenses are required:
+    Microsoft 365 Business Basic or above – for accessing user mail, calendar, and contacts
+    Azure AD Premium P1/P2 – for directory features and audit log retention
+    Microsoft 365 E5 – required for accessing Teams messages, advanced audit logs, and compliance APIs
 ---
 
 Copyright &copy; 2019 Stitch
