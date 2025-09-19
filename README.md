@@ -171,7 +171,20 @@ This tap:
 
 
 
-## Authentication
+## Prerequsite
+    ```
+    To use Microsoft Graph APIs for sync and data access, ensure your tenant has the required licenses.
+
+        | **Graph API / Feature**                 | **Required License**                       | **Notes**                                              |
+        |----------------------------------------|--------------------------------------------|--------------------------------------------------------|
+        | **Mail, Calendar, Contacts**           | M365 Business Basic or higher              | Access via `Mail.Read`, `Calendars.Read`, etc.         |
+        | **Azure AD Directory Sync**            | Azure AD Premium P1 or P2                  | Needed for advanced directory features                 |
+        | **Audit Logs (30–365 days)**           | AAD P1/P2 or M365 E5                       | For extended retention and compliance                  |
+        | **Teams Messages (Chats, Channels)**   | M365 E5 + Microsoft approval               | Protected APIs; app access needs justification         |
+        | **Webhooks / Change Notifications**    | Any M365 license                           | For real-time sync triggers                            |
+        | **Data Sync APIs (Delta Queries)**     | Any M365 license                           | Available for users, groups, mail, etc.                |
+
+    ```
 
 ## Quick Start
 
@@ -279,10 +292,6 @@ This tap:
     ```
     pip install -e .'[dev]'
     ```
-7.  Sync features required folowing licenses:
-    Microsoft 365 Business Basic or above – for accessing user mail, calendar, and contacts
-    Azure AD Premium P1/P2 – for directory features and audit log retention
-    Microsoft 365 E5 – required for accessing Teams messages, advanced audit logs, and compliance APIs
 ---
 
 Copyright &copy; 2019 Stitch
