@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "user_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parentFolderId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "birthday": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "fileAs": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "givenName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "initials": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

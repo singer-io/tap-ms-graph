@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "deletedDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "description": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "roleTemplateId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,246 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "deletedDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "accountEnabled": {
+      "type": "boolean"
+    },
+    "alternativeNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "appDisplayName": {
+      "type": "string"
+    },
+    "appDescription": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appId": {
+      "type": "string"
+    },
+    "applicationTemplateId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "appOwnerOrganizationId": {
+      "type": "string"
+    },
+    "appRoleAssignmentRequired": {
+      "type": "boolean"
+    },
+    "createdDateTime": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "description": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "disabledByMicrosoftStatus": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "homepage": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "loginUrl": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "logoutUrl": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "notes": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "notificationEmailAddresses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preferredSingleSignOnMode": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "preferredTokenSigningKeyThumbprint": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "replyUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "servicePrincipalNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "servicePrincipalType": {
+      "type": "string"
+    },
+    "signInAudience": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokenEncryptionKeyId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "samlSingleSignOnSettings": {
+      "type": [
+        "null",
+        "object"
+      ]
+    },
+    "addIns": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "appRoles": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "info": {
+      "type": "object",
+      "properties": {
+        "logoUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "marketingUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "privacyStatementUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "supportUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "termsOfServiceUrl": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "keyCredentials": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "oauth2PermissionScopes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "passwordCredentials": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "resourceSpecificApplicationPermissions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "verifiedPublisher": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "verifiedPublisherId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "addedDateTime": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

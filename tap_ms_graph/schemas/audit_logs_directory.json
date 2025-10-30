@@ -1,0 +1,217 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "category": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "correlationId": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "result": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "resultReason": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "activityDisplayName": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "activityDateTime": {
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "loggedByService": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "operationType": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "initiatedBy": {
+      "type": [
+        "null",
+        "object"
+      ],
+      "properties": {
+        "app": {
+          "type": [
+            "null",
+            "object"
+          ]
+        },
+        "user": {
+          "type": [
+            "null",
+            "object"
+          ],
+          "properties": {
+            "id": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "displayName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "userPrincipalName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "ipAddress": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "userType": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "homeTenantId": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "homeTenantName": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "targetResources": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "displayName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "userPrincipalName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "groupType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "modifiedProperties": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "type": "object",
+              "properties": {
+                "displayName": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "oldValue": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                },
+                "newValue": {
+                  "type": [
+                    "null",
+                    "string"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "additionalDetails": {
+      "type": [
+        "null",
+        "array"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "value": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
