@@ -16,14 +16,15 @@ class MS_GraphBaseTest(BaseCase):
 
     Metadata describing streams. A bunch of shared methods that are used
     in tap-tester tests. Shared tap-specific methods (as needed).
-    """    
+    """
     start_date = "2019-01-01T00:00:00Z"
+    PARENT_TAP_STREAM_ID = "parent-tap-stream-id"
 
     @staticmethod
     def tap_name():
         """The name of the tap."""
         return "tap-ms_graph"
-    
+
     @staticmethod
     def get_type():
         """The name of the tap."""
@@ -33,103 +34,158 @@ class MS_GraphBaseTest(BaseCase):
     def expected_metadata(cls):
         """The expected streams and metadata about the streams."""
         return {
-            "users": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "groups": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "group_member": {
-                cls.PRIMARY_KEYS: { "group_id", "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "group_owner": {
-                cls.PRIMARY_KEYS: { "group_id", "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "directory_roles": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "directory_role_member": {
-                cls.PRIMARY_KEYS: { "role_id", "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
             "applications": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "service_principals": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "conditional_access_policies": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "audit_logs_signIns": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
+                cls.API_LIMIT: 1000
             },
             "audit_logs_directory": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
+                cls.API_LIMIT: 1000
+            },
+            "audit_logs_signins": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "chats": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "chat_messages": {
+                cls.PRIMARY_KEYS: { "chat_id", "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "conditional_access_policies": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "directory_role_member": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "directory_role_templates": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "directory_roles": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "drives": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "group_member": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "group_owner": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000,
+            },
+            "groups": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "service_principals": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
             },
             "teams": {
                 cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
+                cls.API_LIMIT: 1000
             },
             "team_member": {
-                cls.PRIMARY_KEYS: { "team_id", "id" },
+                cls.PRIMARY_KEYS: { "id", "team_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
+                cls.API_LIMIT: 1000
+            },"channels": {
+                cls.PRIMARY_KEYS: { "id", "team_id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
             },
-            "channel": {
-                cls.PRIMARY_KEYS: { "team_id", "id" },
+            "users": {
+                cls.PRIMARY_KEYS: { "id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
+                cls.API_LIMIT: 1000
+            },
+            "calendar_events": {
+                cls.PRIMARY_KEYS: { "id", "user_id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "contacts": {
+                cls.PRIMARY_KEYS: { "id", "user_id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "drive_items": {
+                cls.PRIMARY_KEYS: {"id", "user_Id"},
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
+            },
+            "mail_messages": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 1000
             }
         }
 
@@ -154,3 +210,12 @@ class MS_GraphBaseTest(BaseCase):
 
         return_value["start_date"] = self.start_date
         return return_value
+
+    def expected_parent_tap_stream(self, stream=None):
+        """return a dictionary with key of table name and value of parent stream"""
+        parent_stream = {
+            table: properties.get(self.PARENT_TAP_STREAM_ID, None)
+            for table, properties in self.expected_metadata().items()}
+        if not stream:
+            return parent_stream
+        return parent_stream[stream]

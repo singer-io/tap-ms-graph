@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class GroupOwner(FullTableStream):
     tap_stream_id = "group_owner"
-    key_properties = ["id", "group_id"]
+    key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
