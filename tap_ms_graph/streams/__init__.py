@@ -24,7 +24,7 @@ from tap_ms_graph.streams.users import Users
 STREAMS = {
     "applications": Applications,
     "audit_logs_directory": AuditLogsDirectory,
-    "audit_logs_signIns": AuditLogsSignins,
+    "audit_logs_signins": AuditLogsSignins,
     "calendar_events": CalendarEvents,
     "channels": Channels,
     "chat_messages": ChatMessages,
