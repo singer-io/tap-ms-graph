@@ -13,12 +13,6 @@
         "null"
       ]
     },
-    "role_id": {
-      "type": [
-        "string",
-        "null"
-      ]
-    },
     "businessPhones": {
       "type": "array",
       "items": {

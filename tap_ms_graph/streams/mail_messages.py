@@ -7,11 +7,11 @@ LOGGER = get_logger()
 
 class MailMessages(FullTableStream):
     tap_stream_id = "mail_messages"
-    key_properties = ["id", "user_id"]
+    key_properties = ["id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    path = "users/{user_id}/messages"
+    path = "users/{id}/messages"
     parent = "users"
 
 
@@ -19,4 +19,4 @@ class MailMessages(FullTableStream):
         """Constructs the API endpoint URL for fetching mail messages for a given user."""
         if not parent_obj or 'id' not in parent_obj:
             raise ValueError("parent_obj must be provided with an 'id' key.")
-        return f"{self.client.base_url}/{self.path.format(user_id = parent_obj['id'])}"
+        return f"{self.client.base_url}/{self.path.format(id = parent_obj['id'])}"
