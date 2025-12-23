@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class GroupMember(FullTableStream):
     tap_stream_id = "group_member"
-    key_properties = ["id"]
+    key_properties = ["id", "group_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
@@ -19,3 +19,11 @@ class GroupMember(FullTableStream):
         if not parent_obj or 'id' not in parent_obj:
             raise ValueError("parent_obj must be provided with an 'id' key.")
         return f"{self.client.base_url}/{self.path.format(group_id = parent_obj['id'])}"
+
+    def modify_object(self, record: Dict, parent_record: Dict = None) -> Dict:
+        """
+        Modify the record before writing to the stream
+        """
+        if parent_record:
+            record["group_id"] = parent_record.get("id")
+        return record

@@ -5,7 +5,16 @@
       "type": "string"
     },
     "id": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "user_id": {
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "createdDateTime": {
       "type": [

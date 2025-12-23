@@ -77,7 +77,7 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 999
             },
             "directory_role_member": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "role_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
@@ -105,14 +105,14 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 999
             },
             "group_member": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "group_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
             "group_owner": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "group_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
@@ -181,7 +181,7 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 999
             },
             "mail_messages": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "user_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
