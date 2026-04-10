@@ -203,8 +203,9 @@ class TestClientRequests:
         ["/me/messages", "/me/contacts"],
         ids=["messages", "contacts"]
     )
+    @patch("time.sleep", return_value=None)
     @patch("requests.Session.request")
-    def test_rate_limit_error(self, mock_request, client_config, mock_token, endpoint, retry_after):
+    def test_rate_limit_error(self, mock_request, mock_sleep, client_config, mock_token, endpoint, retry_after):
         """
         Test that hitting the rate limit (429) with Retry-After headers causes the
         client to raise MsGraphRateLimitError after retry attempts.
