@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch, call
 
 from singer import metadata as singer_metadata
 
-from tap_ms_graph.streams.abstracts import FullTableStream, IncrementalStream
+from tap_ms_graph.streams.abstracts import FullTableStream
 from tap_ms_graph.streams.users import Users
 from tap_ms_graph.streams.groups import Groups
 from tap_ms_graph.streams.group_member import GroupMember
@@ -54,20 +54,7 @@ def make_catalog_entry(schema_dict=None, key_properties=None, selected=True):
     return entry
 
 
-# ---------------------------------------------------------------------------
-# Concrete IncrementalStream for testing (no real stream uses it yet)
-# ---------------------------------------------------------------------------
 
-class SampleIncrementalStream(IncrementalStream):
-    tap_stream_id = "sample_incremental"
-    key_properties = ["id"]
-    replication_method = "INCREMENTAL"
-    replication_keys = ["updated_at"]
-    data_key = "value"
-    path = "sample"
-
-    def sync(self, state, transformer, parent_obj=None):
-        return super().sync(state, transformer, parent_obj)
 
 
 # ---------------------------------------------------------------------------
@@ -377,177 +364,132 @@ class TestFullTableSync:
 
 
 # ---------------------------------------------------------------------------
-# Tests: IncrementalStream.sync (via SampleIncrementalStream)
+# Tests: FullTableStream.sync — additional cases
 # ---------------------------------------------------------------------------
 
-class TestIncrementalSync:
+class TestFullTableSyncAdditional:
     @patch("tap_ms_graph.streams.abstracts.write_record")
-    def test_writes_records_after_bookmark(self, mock_write_record):
-        schema = {
-            "type": "object",
-            "properties": {
-                "id": {"type": ["null", "string"]},
-                "updated_at": {"type": ["null", "string"], "format": "date-time"},
-            },
-        }
-        mdata = singer_metadata.get_standard_metadata(
-            schema=schema,
-            key_properties=["id"],
-            valid_replication_keys=["updated_at"],
-            replication_method="INCREMENTAL",
-        )
-        mdata_map = singer_metadata.to_map(mdata)
-        mdata_map = singer_metadata.write(mdata_map, (), "selected", True)
-
-        entry = MagicMock()
-        entry.schema.to_dict.return_value = schema
-        entry.metadata = singer_metadata.to_list(mdata_map)
-
+    def test_sync_across_multiple_pages(self, mock_write_record):
+        """Records fetched across two pages are all written."""
+        next_link = "https://graph.microsoft.com/v1.0/users?$skiptoken=page2"
         client = make_client()
-        client.config = {"page_size": 100, "start_date": "2024-01-01T00:00:00Z"}
+        entry = make_catalog_entry(selected=True)
+        client.get.side_effect = [
+            {"value": [{"id": "1"}, {"id": "2"}], "@odata.nextLink": next_link},
+            {"value": [{"id": "3"}]},
+        ]
 
-        stream = SampleIncrementalStream(client, entry)
+        stream = Users(client, entry)
+        from singer import Transformer
+        with Transformer() as transformer:
+            count = stream.sync(state={}, transformer=transformer)
+
+        assert count == 3
+        assert mock_write_record.call_count == 3
+
+    @patch("tap_ms_graph.streams.abstracts.write_record")
+    def test_sync_groups_stream(self, mock_write_record):
+        """Groups (a different top-level stream) syncs correctly."""
+        client = make_client()
+        entry = make_catalog_entry(selected=True)
         client.get.return_value = {
-            "value": [
-                {"id": "1", "updated_at": "2024-06-01T00:00:00Z"},
-                {"id": "2", "updated_at": "2024-06-02T00:00:00Z"},
-            ]
+            "value": [{"id": "g1"}, {"id": "g2"}, {"id": "g3"}]
         }
 
-        state = {"bookmarks": {"sample_incremental": {"updated_at": "2024-05-01T00:00:00Z"}}}
+        stream = Groups(client, entry)
+        from singer import Transformer
+        with Transformer() as transformer:
+            count = stream.sync(state={}, transformer=transformer)
+
+        assert count == 3
+        assert mock_write_record.call_count == 3
+
+    @patch("tap_ms_graph.streams.abstracts.write_record")
+    def test_sync_passes_parent_obj_to_children(self, mock_write_record):
+        """Each record is passed as parent_obj to every attached child stream."""
+        client = make_client()
+        entry = make_catalog_entry(selected=True)
+        records = [{"id": "u1"}, {"id": "u2"}, {"id": "u3"}]
+        client.get.return_value = {"value": records}
+
+        stream = Users(client, entry)
+        mock_child = MagicMock()
+        mock_child.sync.return_value = 0
+        stream.child_to_sync = [mock_child]
 
         from singer import Transformer
         with Transformer() as transformer:
-            count = stream.sync(state=state, transformer=transformer)
+            stream.sync(state={}, transformer=transformer)
 
-        assert count == 2
-        assert mock_write_record.call_count == 2
+        # child.sync called once per parent record, with the correct parent_obj
+        assert mock_child.sync.call_count == 3
+        passed_parents = [
+            call_args.kwargs["parent_obj"]["id"]
+            for call_args in mock_child.sync.call_args_list
+        ]
+        assert passed_parents == ["u1", "u2", "u3"]
 
     @patch("tap_ms_graph.streams.abstracts.write_record")
-    def test_skips_records_before_bookmark(self, mock_write_record):
-        schema = {
-            "type": "object",
-            "properties": {
-                "id": {"type": ["null", "string"]},
-                "updated_at": {"type": ["null", "string"], "format": "date-time"},
-            },
-        }
-        mdata = singer_metadata.get_standard_metadata(
-            schema=schema,
-            key_properties=["id"],
-            valid_replication_keys=["updated_at"],
-            replication_method="INCREMENTAL",
-        )
-        mdata_map = singer_metadata.to_map(mdata)
-        mdata_map = singer_metadata.write(mdata_map, (), "selected", True)
-
-        entry = MagicMock()
-        entry.schema.to_dict.return_value = schema
-        entry.metadata = singer_metadata.to_list(mdata_map)
-
+    def test_sync_multiple_children_each_called_per_record(self, mock_write_record):
+        """All children are called for every parent record."""
         client = make_client()
-        client.config = {"page_size": 100, "start_date": "2024-01-01T00:00:00Z"}
+        entry = make_catalog_entry(selected=True)
+        client.get.return_value = {"value": [{"id": "u1"}, {"id": "u2"}]}
 
-        stream = SampleIncrementalStream(client, entry)
-        # One record before bookmark, one after
-        client.get.return_value = {
-            "value": [
-                {"id": "old", "updated_at": "2023-01-01T00:00:00Z"},
-                {"id": "new", "updated_at": "2024-06-01T00:00:00Z"},
-            ]
-        }
-
-        state = {"bookmarks": {"sample_incremental": {"updated_at": "2024-05-01T00:00:00Z"}}}
+        stream = Users(client, entry)
+        child_a = MagicMock()
+        child_a.sync.return_value = 0
+        child_b = MagicMock()
+        child_b.sync.return_value = 0
+        stream.child_to_sync = [child_a, child_b]
 
         from singer import Transformer
         with Transformer() as transformer:
-            count = stream.sync(state=state, transformer=transformer)
+            stream.sync(state={}, transformer=transformer)
 
-        # Only the record after the bookmark should be written
-        assert count == 1
+        assert child_a.sync.call_count == 2
+        assert child_b.sync.call_count == 2
 
     @patch("tap_ms_graph.streams.abstracts.write_record")
-    def test_bookmark_updated_after_sync(self, mock_write_record):
-        schema = {
-            "type": "object",
-            "properties": {
-                "id": {"type": ["null", "string"]},
-                "updated_at": {"type": ["null", "string"], "format": "date-time"},
-            },
-        }
-        mdata = singer_metadata.get_standard_metadata(
-            schema=schema,
-            key_properties=["id"],
-            valid_replication_keys=["updated_at"],
-            replication_method="INCREMENTAL",
-        )
-        mdata_map = singer_metadata.to_map(mdata)
-        mdata_map = singer_metadata.write(mdata_map, (), "selected", True)
-
-        entry = MagicMock()
-        entry.schema.to_dict.return_value = schema
-        entry.metadata = singer_metadata.to_list(mdata_map)
-
+    def test_sync_not_selected_children_still_called(self, mock_write_record):
+        """Children in child_to_sync are always called regardless of parent selection."""
         client = make_client()
-        client.config = {"page_size": 100, "start_date": "2024-01-01T00:00:00Z"}
+        entry = make_catalog_entry(selected=False)  # parent not selected
+        client.get.return_value = {"value": [{"id": "u1"}]}
 
-        stream = SampleIncrementalStream(client, entry)
-        client.get.return_value = {
-            "value": [
-                {"id": "1", "updated_at": "2024-06-01T00:00:00Z"},
-                {"id": "2", "updated_at": "2024-07-01T00:00:00Z"},
-            ]
-        }
-
-        initial_bookmark = "2024-05-01T00:00:00Z"
-        state = {"bookmarks": {"sample_incremental": {"updated_at": initial_bookmark}}}
+        stream = Users(client, entry)
+        mock_child = MagicMock()
+        mock_child.sync.return_value = 0
+        stream.child_to_sync = [mock_child]
 
         from singer import Transformer
         with Transformer() as transformer:
-            stream.sync(state=state, transformer=transformer)
+            stream.sync(state={}, transformer=transformer)
 
-        # Bookmark should now be the max record timestamp.
-        # singer.Transformer normalises datetimes to include microseconds.
-        new_bookmark = state["bookmarks"]["sample_incremental"]["updated_at"]
-        assert new_bookmark.startswith("2024-07-01T00:00:00")
+        # Parent not selected → no parent records written, but child still called
+        mock_write_record.assert_not_called()
+        mock_child.sync.assert_called_once()
 
     @patch("tap_ms_graph.streams.abstracts.write_record")
-    def test_uses_start_date_when_no_bookmark(self, mock_write_record):
-        """When no bookmark exists, start_date is used as the lower bound."""
-        schema = {
-            "type": "object",
-            "properties": {
-                "id": {"type": ["null", "string"]},
-                "updated_at": {"type": ["null", "string"], "format": "date-time"},
-            },
-        }
-        mdata = singer_metadata.get_standard_metadata(
-            schema=schema,
-            key_properties=["id"],
-            valid_replication_keys=["updated_at"],
-            replication_method="INCREMENTAL",
-        )
-        mdata_map = singer_metadata.to_map(mdata)
-        mdata_map = singer_metadata.write(mdata_map, (), "selected", True)
-
-        entry = MagicMock()
-        entry.schema.to_dict.return_value = schema
-        entry.metadata = singer_metadata.to_list(mdata_map)
-
+    def test_sync_three_pages_total_count(self, mock_write_record):
+        """Count accumulates correctly across three pages."""
+        link1 = "https://graph.microsoft.com/v1.0/users?$skip=1"
+        link2 = "https://graph.microsoft.com/v1.0/users?$skip=2"
         client = make_client()
-        client.config = {"page_size": 100, "start_date": "2024-01-01T00:00:00Z"}
+        entry = make_catalog_entry(selected=True)
+        client.get.side_effect = [
+            {"value": [{"id": "1"}, {"id": "2"}], "@odata.nextLink": link1},
+            {"value": [{"id": "3"}, {"id": "4"}], "@odata.nextLink": link2},
+            {"value": [{"id": "5"}]},
+        ]
 
-        stream = SampleIncrementalStream(client, entry)
-        client.get.return_value = {
-            "value": [{"id": "1", "updated_at": "2024-06-01T00:00:00Z"}]
-        }
-
-        state = {}  # no bookmark
+        stream = Users(client, entry)
         from singer import Transformer
         with Transformer() as transformer:
-            count = stream.sync(state=state, transformer=transformer)
+            count = stream.sync(state={}, transformer=transformer)
 
-        assert count == 1
+        assert count == 5
+        assert client.get.call_count == 3
 
 
 # ---------------------------------------------------------------------------
