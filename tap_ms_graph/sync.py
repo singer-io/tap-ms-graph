@@ -68,8 +68,8 @@ def sync(client: Client, config: Dict, catalog: singer.Catalog, state) -> None:
                 # After all backoff retries are exhausted, log the error and
                 # continue syncing the remaining streams rather than crashing.
                 LOGGER.warning(
-                    "Stream '%s' encountered a server-side error after all retries "
-                    "and will be skipped: %s",
+                    "Stream '%s' encountered a rate limit or transient server-side "
+                    "error after all retries and will be skipped: %s",
                     stream_name, e
                 )
                 update_currently_syncing(state, None)
