@@ -12,9 +12,7 @@ from tap_ms_graph.exceptions import (
     ERROR_CODE_EXCEPTION_MAPPING,
     MsGraphError,
     MsGraphBackoffError,
-    MsGraphRateLimitError,
-    MsGraphInternalServerError,
-    MsGraphServiceUnavailableError)
+    MsGraphRateLimitError)
 
 LOGGER = get_logger()
 REQUEST_TIMEOUT = 300
@@ -41,8 +39,14 @@ def raise_for_error(response: requests.Response) -> None:
                 response.status_code,
                 response_json.get("message", ERROR_CODE_EXCEPTION_MAPPING.get(
                     response.status_code, {}).get("message", "Unknown Error")))
-        exc = ERROR_CODE_EXCEPTION_MAPPING.get(
-            response.status_code, {}).get("raise_exception", MsGraphError)
+        # For 5xx errors, fall back to MsGraphBackoffError if not specifically mapped
+        # so the backoff decorator retries them instead of propagating immediately.
+        if 500 <= response.status_code < 600:
+            exc = ERROR_CODE_EXCEPTION_MAPPING.get(
+                response.status_code, {}).get("raise_exception", MsGraphBackoffError)
+        else:
+            exc = ERROR_CODE_EXCEPTION_MAPPING.get(
+                response.status_code, {}).get("raise_exception", MsGraphError)
         raise exc(message, response) from None
 
 def wait_if_retry_after(details):
@@ -150,19 +154,24 @@ class Client:
 
 
     @backoff.on_exception(
-        wait_gen=lambda: backoff.expo(factor=2),
+        wait_gen=backoff.expo,
         on_backoff=wait_if_retry_after,
+        exception=MsGraphRateLimitError,
+        max_tries=6,
+        max_time=60,
+        jitter=None,
+    )
+    @backoff.on_exception(
+        wait_gen=backoff.expo,
         exception=(
             ConnectionResetError,
             ConnectionError,
             ChunkedEncodingError,
             Timeout,
-            MsGraphRateLimitError,
-            MsGraphInternalServerError,
-            MsGraphServiceUnavailableError,
-            MsGraphBackoffError
+            MsGraphBackoffError,  # covers all 5xx: 500, 501, 502, 503, 422
         ),
         max_tries=5,
+        factor=2,
     )
     def __make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Mapping[Any, Any]]:
         """

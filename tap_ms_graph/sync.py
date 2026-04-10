@@ -2,6 +2,7 @@ import singer
 from typing import Dict
 from tap_ms_graph.streams import STREAMS
 from tap_ms_graph.client import Client
+from tap_ms_graph.exceptions import MsGraphBackoffError, MsGraphRateLimitError
 
 LOGGER = singer.get_logger()
 
@@ -61,7 +62,18 @@ def sync(client: Client, config: Dict, catalog: singer.Catalog, state) -> None:
 
             LOGGER.info("START Syncing: {}".format(stream_name))
             update_currently_syncing(state, stream_name)
-            total_records = stream.sync(state=state, transformer=transformer)
+            try:
+                total_records = stream.sync(state=state, transformer=transformer)
+            except (MsGraphBackoffError, MsGraphRateLimitError) as e:
+                # After all backoff retries are exhausted, log the error and
+                # continue syncing the remaining streams rather than crashing.
+                LOGGER.warning(
+                    "Stream '%s' encountered a server-side error after all retries "
+                    "and will be skipped: %s",
+                    stream_name, e
+                )
+                update_currently_syncing(state, None)
+                continue
 
             update_currently_syncing(state, None)
             LOGGER.info(

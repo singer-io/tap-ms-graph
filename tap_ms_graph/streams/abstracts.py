@@ -73,6 +73,43 @@ class BaseStream(ABC):
     def is_selected(self):
         return metadata.get(self.metadata, (), "selected")
 
+    @classmethod
+    def check_access(cls, client) -> None:
+        """Makes a lightweight API call ($top=1) to verify that the credentials
+        have read access to this stream's endpoint.
+
+        Child streams (those with a non-empty ``parent`` attribute) depend on a
+        parent object ID that is only available at sync time, so their access is
+        governed by their parent stream's permissions and they are skipped here.
+
+        Raises:
+            MsGraphForbiddenError: if the API returns 403 Forbidden, or a 400
+                that indicates a licensing / feature restriction (e.g. "Tenant
+                does not have a SPO license.").
+        """
+        if cls.parent:
+            # Child streams are controlled by the parent stream's permissions;
+            # no independent check is needed during discovery.
+            return
+
+        from tap_ms_graph.exceptions import MsGraphForbiddenError, MsGraphBadRequestError, MsGraphBackoffError  # local import to avoid circularity
+
+        endpoint = f"{client.base_url}/{cls.path}"
+        try:
+            client.get(endpoint, {"$top": "1"}, cls.headers)
+        except MsGraphForbiddenError:
+            raise
+        except MsGraphBadRequestError as e:
+            # A 400 during the access-check probe almost always means the tenant
+            # lacks the required license or product (e.g. "Tenant does not have
+            # a SPO license.").  Treat it the same as a 403 so the stream is
+            # excluded from the catalog gracefully instead of crashing discovery.
+            raise MsGraphForbiddenError(str(e)) from e
+        except MsGraphBackoffError as e:
+            # 5xx errors (500, 501, 502, 503) during the probe indicate the
+            # endpoint is unavailable or not implemented for this tenant.
+            # Exclude the stream gracefully rather than crashing discovery.
+            raise MsGraphForbiddenError(str(e)) from e
 
     @abstractmethod
     def sync(
