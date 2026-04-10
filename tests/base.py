@@ -193,10 +193,16 @@ class MS_GraphBaseTest(BaseCase):
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'tenant_id': 'TAP_MS_GRAPH_TENANT_ID', 'client_id': 'TAP_MS_GRAPH_CLIENT_ID', 'client_secret': 'TAP_MS_GRAPH_CLIENT_SECRET', 'scope': 'TAP_MS_GRAPH_SCOPE'}
+        creds = {
+            'tenant_id': ('TAP_MS_GRAPH_TENANT_ID', 'AZURE_TENANT_ID'),
+            'client_id': ('TAP_MS_GRAPH_CLIENT_ID', 'AZURE_CLIENT_ID'),
+            'client_secret': ('TAP_MS_GRAPH_CLIENT_SECRET', 'AZURE_CLIENT_SECRET'),
+            'scope': ('TAP_MS_GRAPH_SCOPE', 'AZURE_SCOPE')
+        }
 
-        for cred in creds:
-            credentials_dict[cred] = os.getenv(creds[cred])
+        for cred, env_vars in creds.items():
+            primary_env, legacy_env = env_vars
+            credentials_dict[cred] = os.getenv(primary_env) or os.getenv(legacy_env)
 
         return credentials_dict
 
