@@ -45,9 +45,7 @@ def discover(client=None) -> Catalog:
                 accessible_top_level.add(stream_name)
             except MsGraphForbiddenError:
                 LOGGER.warning(
-                    "Stream '%s' is not accessible (HTTP 403 Forbidden). "
-                    "The account credentials do not have read permission for this endpoint. "
-                    "It will be excluded from the catalog.",
+                    "Stream '%s' is not accessible and will be excluded from the catalog.",
                     stream_name,
                 )
                 inaccessible_top_level.append(stream_name)
