@@ -178,8 +178,9 @@ class TestClientRequests:
         ["/me/messages", "/me/events"],
         ids=["messages", "events"]
     )
+    @patch("time.sleep", return_value=None)
     @patch("requests.Session.request")
-    def test_request_errors_retry(self, mock_request, client_config, mock_token, error, endpoint):
+    def test_request_errors_retry(self, mock_request, mock_sleep, client_config, mock_token, error, endpoint):
         """
         Test that transient network errors trigger retries and eventually raise the
         corresponding exception after max retries.
