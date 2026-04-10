@@ -1,8 +1,9 @@
 from base import MS_GraphBaseTest
 from tap_tester.base_suite_tests.start_date_test import StartDateTest
+import unittest
 
 
-
+@unittest.skip("Not applicable for full table streams: all MS Graph streams use FULL TABLE.")
 class MS_GraphStartDateTest(StartDateTest, MS_GraphBaseTest):
     """Instantiate start date according to the desired data set and run the
     test."""
