@@ -100,14 +100,18 @@ class BaseStream(ABC):
     def get_records(self) -> Iterator:
         """Interacts with api client interaction and pagination."""
         next_page = 1
+        params = self.params
         while next_page:
             response = self.client.get(
-                self.url_endpoint, self.params, self.headers, self.path
+                self.url_endpoint, params, self.headers, self.path
             )
             raw_records = response.get(self.data_key, [])
             next_page = response.get(self.next_page_key)
             if next_page:
+                # The nextLink URL already contains all query params (e.g. $top,
+                # $skiptoken), so passing params again would duplicate them.
                 self.url_endpoint = next_page
+                params = {}
             yield from raw_records
 
     def write_schema(self) -> None:
