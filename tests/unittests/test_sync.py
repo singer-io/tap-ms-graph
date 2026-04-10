@@ -1,9 +1,5 @@
 """Unit tests for tap_ms_graph/sync.py"""
-import pytest
 from unittest.mock import MagicMock, patch
-
-import singer
-
 from tap_ms_graph.sync import update_currently_syncing, write_schema, sync
 from tap_ms_graph.exceptions import MsGraphBackoffError, MsGraphRateLimitError
 
