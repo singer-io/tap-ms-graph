@@ -11,7 +11,7 @@ jobs:
             uv venv --python 3.12 /usr/local/share/virtualenvs/tap-ms-graph
             source /usr/local/share/virtualenvs/tap-ms-graph/bin/activate
             uv pip install -U setuptools
-            uv pip install .[test]
+            uv pip install .[dev]
       - run:
           name: "JSON Validator"
           command: |
