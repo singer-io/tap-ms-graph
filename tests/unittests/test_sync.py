@@ -1,5 +1,8 @@
 """Unit tests for tap_ms_graph/sync.py"""
 from unittest.mock import MagicMock, patch
+# Explicit submodule import so `tap_ms_graph.sync` resolves to the module
+# object rather than the `sync` function aliased in tap_ms_graph/__init__.py.
+import tap_ms_graph.sync  # noqa: F401
 from tap_ms_graph.sync import update_currently_syncing, write_schema, sync
 from tap_ms_graph.exceptions import MsGraphBackoffError, MsGraphRateLimitError
 

@@ -1,7 +1,9 @@
 """Unit tests for tap_ms_graph/discover.py"""
 import pytest
 from unittest.mock import MagicMock, patch
-
+# Explicit submodule import so `tap_ms_graph.discover` resolves to the module
+# object rather than the `discover` function aliased in tap_ms_graph/__init__.py.
+import tap_ms_graph.discover  # noqa: F401
 from tap_ms_graph.discover import discover
 from tap_ms_graph.exceptions import MsGraphForbiddenError
 
