@@ -174,7 +174,7 @@ class MS_GraphBaseTest(BaseCase):
                 cls.API_LIMIT: 999
             },
             "drive_items": {
-                cls.PRIMARY_KEYS: {"id", "user_Id"},
+                cls.PRIMARY_KEYS: {"id", "user_id"},
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
