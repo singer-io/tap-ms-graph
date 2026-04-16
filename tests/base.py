@@ -76,27 +76,27 @@ class MS_GraphBaseTest(BaseCase):
             #     cls.OBEYS_START_DATE: False,
             #     cls.API_LIMIT: 999
             # },
-            # "directory_role_member": {
-            #     cls.PRIMARY_KEYS: { "id", "role_id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "directory_role_templates": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "directory_roles": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
+            "directory_role_member": {
+                cls.PRIMARY_KEYS: { "id", "role_id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 999
+            },
+            "directory_role_templates": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 999
+            },
+            "directory_roles": {
+                cls.PRIMARY_KEYS: { "id" },
+                cls.REPLICATION_METHOD: cls.FULL_TABLE,
+                cls.REPLICATION_KEYS: set(),
+                cls.OBEYS_START_DATE: False,
+                cls.API_LIMIT: 999
+            },
             # "drives": {
             #     cls.PRIMARY_KEYS: { "id" },
             #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
@@ -159,34 +159,34 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            "calendar_events": {
-                cls.PRIMARY_KEYS: { "id", "user_id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "contacts": {
-                cls.PRIMARY_KEYS: { "id", "user_id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "drive_items": {
-                cls.PRIMARY_KEYS: {"id", "user_id"},
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "mail_messages": {
-                cls.PRIMARY_KEYS: { "id", "user_id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            }
+            # "calendar_events": {  # per-user stream; excluded when user access not granted
+            #     cls.PRIMARY_KEYS: { "id", "user_id" },
+            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
+            #     cls.REPLICATION_KEYS: set(),
+            #     cls.OBEYS_START_DATE: False,
+            #     cls.API_LIMIT: 999
+            # },
+            # "contacts": {  # per-user stream; excluded when user access not granted
+            #     cls.PRIMARY_KEYS: { "id", "user_id" },
+            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
+            #     cls.REPLICATION_KEYS: set(),
+            #     cls.OBEYS_START_DATE: False,
+            #     cls.API_LIMIT: 999
+            # },
+            # "drive_items": {  # requires SharePoint license
+            #     cls.PRIMARY_KEYS: {"id", "user_id"},
+            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
+            #     cls.REPLICATION_KEYS: set(),
+            #     cls.OBEYS_START_DATE: False,
+            #     cls.API_LIMIT: 999
+            # },
+            # "mail_messages": {  # per-user stream; excluded when user access not granted
+            #     cls.PRIMARY_KEYS: { "id", "user_id" },
+            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
+            #     cls.REPLICATION_KEYS: set(),
+            #     cls.OBEYS_START_DATE: False,
+            #     cls.API_LIMIT: 999
+            # }
         }
 
     @staticmethod
