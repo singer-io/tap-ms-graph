@@ -26,7 +26,10 @@ def write_schema(stream, client, streams_to_sync, catalog) -> None:
         stream.write_schema()
 
     for child in stream.children:
-        child_obj = STREAMS[child](client, catalog.get_stream(child))
+        child_catalog_entry = catalog.get_stream(child)
+        if child_catalog_entry is None:
+            continue
+        child_obj = STREAMS[child](client, child_catalog_entry)
         write_schema(child_obj, client, streams_to_sync, catalog)
         if child in streams_to_sync:
 
@@ -62,18 +65,7 @@ def sync(client: Client, config: Dict, catalog: singer.Catalog, state) -> None:
 
             LOGGER.info("START Syncing: {}".format(stream_name))
             update_currently_syncing(state, stream_name)
-            try:
-                total_records = stream.sync(state=state, transformer=transformer)
-            except (MsGraphBackoffError, MsGraphRateLimitError) as e:
-                # After all backoff retries are exhausted, log the error and
-                # continue syncing the remaining streams rather than crashing.
-                LOGGER.warning(
-                    "Stream '%s' encountered a rate limit or transient server-side "
-                    "error after all retries and will be skipped: %s",
-                    stream_name, e
-                )
-                update_currently_syncing(state, None)
-                continue
+            total_records = stream.sync(state=state, transformer=transformer)
 
             update_currently_syncing(state, None)
             LOGGER.info(

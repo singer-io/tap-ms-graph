@@ -32,11 +32,11 @@ class MsGraphConflictError(MsGraphError):
     """class representing 409 status code."""
     pass
 
-class MsGraphUnprocessableEntityError(MsGraphBackoffError):
+class MsGraphUnprocessableEntityError(MsGraphError):
     """class representing 422 status code."""
     pass
 
-class MsGraphRateLimitError(MsGraphError):
+class MsGraphRateLimitError(MsGraphBackoffError):
     """class representing 429 status code."""
     def __init__(self, message=None, response=None):
         """Initialize the Amazon_AdsRateLimitError. Parses the 'Retry-After' header from the response (if present) and sets the

@@ -13,6 +13,7 @@ class DirectoryRoles(FullTableStream):
     data_key = "value"
     path = "directoryRoles"
     children = ["directory_role_member"]
+    supports_top = False
 
 
     def update_params(self, **kwargs) -> None:
