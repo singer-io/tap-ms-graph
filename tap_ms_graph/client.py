@@ -156,22 +156,17 @@ class Client:
     @backoff.on_exception(
         wait_gen=backoff.expo,
         on_backoff=wait_if_retry_after,
-        exception=MsGraphRateLimitError,
-        max_tries=6,
-        max_time=60,
-        jitter=None,
-    )
-    @backoff.on_exception(
-        wait_gen=backoff.expo,
         exception=(
             ConnectionResetError,
             ConnectionError,
             ChunkedEncodingError,
             Timeout,
-            MsGraphBackoffError,  # covers all 5xx: 500, 501, 502, 503, 422
+            MsGraphBackoffError,  # covers all 5xx and 429 (MsGraphRateLimitError subclass)
         ),
-        max_tries=5,
+        max_tries=6,
+        max_time=60,
         factor=2,
+        jitter=None,
     )
     def __make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Mapping[Any, Any]]:
         """

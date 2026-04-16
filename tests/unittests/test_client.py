@@ -186,13 +186,13 @@ class TestClientRequests:
         corresponding exception after max retries.
         """
         full_url = f"{self.base_url}{endpoint}"
-        mock_request.side_effect = [mock_token] + [error()] * 5
+        mock_request.side_effect = [mock_token] + [error()] * 6
 
         with pytest.raises(error):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
-        assert mock_request.call_count == 6  # 1 for token + 5 retries
+        assert mock_request.call_count == 7  # 1 for token + 6 retries
 
     @pytest.mark.parametrize(
         "retry_after",

@@ -2,7 +2,6 @@ import singer
 from typing import Dict
 from tap_ms_graph.streams import STREAMS
 from tap_ms_graph.client import Client
-from tap_ms_graph.exceptions import MsGraphBackoffError, MsGraphRateLimitError
 
 LOGGER = singer.get_logger()
 

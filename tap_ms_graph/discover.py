@@ -122,7 +122,11 @@ def discover(client=None) -> Catalog:
     for stream_name, schema_dict in sorted_streams:
         stream_cls = STREAMS.get(stream_name)
 
-        if client and stream_cls:
+        if client:
+            if stream_cls is None:
+                # Stream exists in schemas but has no registered class; skip when
+                # a client is present since we cannot verify access.
+                continue
             if not stream_cls.parent:
                 # ---- Top-level stream: check access, then probe children ----
                 if not _check_top_level_access(client, stream_name, stream_cls, accessible_top_level, inaccessible_child_streams):

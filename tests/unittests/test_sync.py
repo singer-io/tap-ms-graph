@@ -1,4 +1,5 @@
 """Unit tests for tap_ms_graph/sync.py"""
+import pytest
 from unittest.mock import MagicMock, patch
 # Explicit submodule import so `tap_ms_graph.sync` resolves to the module
 # object rather than the `sync` function aliased in tap_ms_graph/__init__.py.
@@ -179,7 +180,7 @@ class TestSync:
         mock_groups.sync.assert_called_once()
 
     def test_continues_on_backoff_error(self):
-        """After MsGraphBackoffError, remaining streams still sync."""
+        """MsGraphBackoffError propagates out of sync."""
         mock_users = make_mock_stream()
         mock_users.sync.side_effect = MsGraphBackoffError("server error")
 
@@ -188,12 +189,12 @@ class TestSync:
             "users": MagicMock(return_value=mock_users),
             "groups": MagicMock(return_value=mock_groups),
         }
-        _run_sync(streams_map, ["users", "groups"])
+        with pytest.raises(MsGraphBackoffError):
+            _run_sync(streams_map, ["users", "groups"])
         mock_users.sync.assert_called_once()
-        mock_groups.sync.assert_called_once()
 
     def test_continues_on_rate_limit_error(self):
-        """After MsGraphRateLimitError, remaining streams still sync."""
+        """MsGraphRateLimitError propagates out of sync."""
         mock_users = make_mock_stream()
         mock_users.sync.side_effect = MsGraphRateLimitError("rate limit")
 
@@ -202,8 +203,9 @@ class TestSync:
             "users": MagicMock(return_value=mock_users),
             "groups": MagicMock(return_value=mock_groups),
         }
-        _run_sync(streams_map, ["users", "groups"])
-        mock_groups.sync.assert_called_once()
+        with pytest.raises(MsGraphRateLimitError):
+            _run_sync(streams_map, ["users", "groups"])
+        mock_users.sync.assert_called_once()
 
     @patch("singer.write_state")
     @patch("singer.set_currently_syncing")
@@ -250,7 +252,7 @@ class TestSync:
         mock_apps.sync.assert_called_once()
 
     def test_backoff_error_does_not_stop_subsequent_streams(self):
-        """First stream fails; second and third still run."""
+        """MsGraphBackoffError on first stream propagates; subsequent streams are not reached."""
         mock_s1 = make_mock_stream()
         mock_s1.sync.side_effect = MsGraphBackoffError("error")
         mock_s2 = make_mock_stream(sync_return=4)
@@ -260,6 +262,6 @@ class TestSync:
             "s2": MagicMock(return_value=mock_s2),
             "s3": MagicMock(return_value=mock_s3),
         }
-        _run_sync(streams_map, ["s1", "s2", "s3"])
-        mock_s2.sync.assert_called_once()
-        mock_s3.sync.assert_called_once()
+        with pytest.raises(MsGraphBackoffError):
+            _run_sync(streams_map, ["s1", "s2", "s3"])
+        mock_s1.sync.assert_called_once()

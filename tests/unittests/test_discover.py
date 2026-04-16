@@ -145,8 +145,10 @@ class TestDiscoverWithClient:
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            with pytest.raises(MsGraphForbiddenError):
-                discover(client=mock_client)
+            catalog = discover(client=mock_client)
+
+        # All streams inaccessible → catalog is empty (no raise)
+        assert catalog.streams == []
 
     def test_child_excluded_when_parent_inaccessible(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
@@ -213,9 +215,10 @@ class TestDiscoverWithClient:
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(extra_schemas, extra_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            # All top-level streams forbidden → should raise
-            with pytest.raises(MsGraphForbiddenError):
-                discover(client=mock_client)
+            # All top-level streams forbidden → empty catalog
+            catalog = discover(client=mock_client)
+
+        assert catalog.streams == []
 
     def test_catalog_entries_have_tap_stream_id(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata

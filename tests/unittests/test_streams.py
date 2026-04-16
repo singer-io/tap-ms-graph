@@ -95,23 +95,24 @@ class TestCheckAccess:
             Users.check_access(client)
 
     def test_converts_bad_request_to_forbidden(self):
-        """A 400 (e.g. licensing restriction) is surfaced as MsGraphForbiddenError."""
+        """A 400 is re-raised as-is; the caller (discover.py) decides how to handle it."""
         client = make_client()
         client.get.side_effect = MsGraphBadRequestError("400 no license")
-        with pytest.raises(MsGraphForbiddenError):
+        with pytest.raises(MsGraphBadRequestError):
             Users.check_access(client)
 
     def test_converts_5xx_to_forbidden(self):
-        """5xx errors during the probe are converted to MsGraphForbiddenError."""
+        """5xx errors are re-raised as-is; the caller (discover.py) decides how to handle them."""
         client = make_client()
         client.get.side_effect = MsGraphInternalServerError("500 server error")
-        with pytest.raises(MsGraphForbiddenError):
+        with pytest.raises(MsGraphInternalServerError):
             Users.check_access(client)
 
     def test_converts_generic_backoff_to_forbidden(self):
+        """Backoff errors are re-raised as-is; the caller (discover.py) decides how to handle them."""
         client = make_client()
         client.get.side_effect = MsGraphBackoffError("backoff error")
-        with pytest.raises(MsGraphForbiddenError):
+        with pytest.raises(MsGraphBackoffError):
             Users.check_access(client)
 
     def test_child_stream_skips_api_call(self):
