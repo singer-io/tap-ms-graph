@@ -141,7 +141,6 @@ def discover(client=None) -> Catalog:
             stream_metadata = field_metadata[stream_name]
             mdata_map = metadata.to_map(stream_metadata)
             key_properties = mdata_map.get((), {}).get("table-key-properties")
-            mdata_map = metadata.write(mdata_map, (), "selected", True)
             stream_metadata = metadata.to_list(mdata_map)
             catalog.streams.append(
                 CatalogEntry(
