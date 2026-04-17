@@ -19,7 +19,8 @@ def _probe_child_access(client, stream_cls, stream_name) -> Set[str]:
 
     parent_endpoint = f"{client.base_url}/{stream_cls.path}"
     try:
-        response = client.get(parent_endpoint, {"$top": "1"}, stream_cls.headers)
+        params = {"$top": "1"} if stream_cls.supports_top else {}
+        response = client.get(parent_endpoint, params, stream_cls.headers)
         parent_records = response.get(stream_cls.data_key, [])
     except Exception:
         LOGGER.debug(
