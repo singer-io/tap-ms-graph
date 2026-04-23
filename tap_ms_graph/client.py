@@ -164,7 +164,6 @@ class Client:
             MsGraphBackoffError,  # covers all 5xx and 429 (MsGraphRateLimitError subclass)
         ),
         max_tries=6,
-        max_time=60,
         factor=2,
         jitter=None,
     )
