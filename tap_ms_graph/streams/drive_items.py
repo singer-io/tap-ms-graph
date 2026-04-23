@@ -11,7 +11,7 @@ class DriveItems(FullTableStream):
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
-    path = "/users/{user_id}/drives"
+    path = "users/{user_id}/drives"
     parent = "users"
 
 

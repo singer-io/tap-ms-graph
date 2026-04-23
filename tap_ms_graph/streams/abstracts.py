@@ -106,11 +106,8 @@ class BaseStream(ABC):
         else:
             endpoint = f"{client.base_url}/{cls.path}"
 
-        try:
-            params = {"$top": "1"} if cls.supports_top else {}
-            client.get(endpoint, params, cls.headers)
-        except (MsGraphForbiddenError, MsGraphUnauthorizedError, MsGraphBadRequestError) as e:
-            raise e
+        params = {"$top": "1"} if cls.supports_top else {}
+        client.get(endpoint, params, cls.headers)
 
     @abstractmethod
     def sync(

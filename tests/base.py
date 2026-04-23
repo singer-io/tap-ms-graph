@@ -1,5 +1,5 @@
+
 import os
-from datetime import datetime as dt
 
 from tap_tester.base_suite_tests.base_case import BaseCase
 
@@ -12,6 +12,11 @@ class MS_GraphBaseTest(BaseCase):
     """
     start_date = "2019-01-01T00:00:00Z"
     PARENT_TAP_STREAM_ID = "parent-tap-stream-id"
+
+    # We do not have a test account with permissions to access these streams, Removed them from expected_metadata for now.
+        # 'audit_logs_signins', 'chats', 'conditional_access_policies',
+        # 'drives', 'calendar_events', 'contacts', 'mail_messages',
+        # 'chat_messages', 'drive_items', 'audit_logs_directory', 'teams'
 
     @staticmethod
     def tap_name():
