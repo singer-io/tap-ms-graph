@@ -1,10 +1,11 @@
+import requests
 import singer
 from typing import Set
 from singer import metadata
 from singer.catalog import Catalog, CatalogEntry, Schema
 from tap_ms_graph.schema import get_schemas
 from tap_ms_graph.streams import STREAMS
-from tap_ms_graph.exceptions import MsGraphForbiddenError, MsGraphUnauthorizedError, MsGraphBadRequestError
+from tap_ms_graph.exceptions import MsGraphError, MsGraphForbiddenError, MsGraphUnauthorizedError, MsGraphBadRequestError
 
 LOGGER = singer.get_logger()
 
@@ -22,17 +23,13 @@ def _probe_child_access(client, stream_cls, stream_name) -> Set[str]:
         params = {"$top": "1"} if stream_cls.supports_top else {}
         response = client.get(parent_endpoint, params, stream_cls.headers)
         parent_records = response.get(stream_cls.data_key, [])
-    except Exception:
-        LOGGER.debug(
-            "Could not fetch a sample record for '%s'; skipping child stream access checks.",
+        if not parent_records:
+            return inaccessible
+    except (MsGraphError, MsGraphUnauthorizedError, requests.exceptions.RequestException) as e:
+        LOGGER.warning(
+            "Could not fetch a sample record for '%s'; skipping child stream access checks: %s",
             stream_name,
-        )
-        return inaccessible
-
-    if not parent_records:
-        LOGGER.debug(
-            "No records found for '%s'; skipping child stream access checks.",
-            stream_name,
+            e,
         )
         return inaccessible
 

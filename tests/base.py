@@ -1,13 +1,6 @@
-import copy
 import os
-import unittest
 from datetime import datetime as dt
-from datetime import timedelta
 
-import dateutil.parser
-import pytz
-from tap_tester import connections, menagerie, runner
-from tap_tester.logger import LOGGER
 from tap_tester.base_suite_tests.base_case import BaseCase
 
 
@@ -48,34 +41,6 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            # "audit_logs_signins": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "chats": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "chat_messages": {
-            #     cls.PRIMARY_KEYS: { "chat_id", "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "conditional_access_policies": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
             "directory_role_member": {
                 cls.PRIMARY_KEYS: { "id", "role_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
@@ -97,13 +62,6 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            # "drives": {
-            #     cls.PRIMARY_KEYS: { "id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
             "group_member": {
                 cls.PRIMARY_KEYS: { "id", "group_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
@@ -159,34 +117,6 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            # "calendar_events": {  # per-user stream; excluded when user access not granted
-            #     cls.PRIMARY_KEYS: { "id", "user_id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "contacts": {  # per-user stream; excluded when user access not granted
-            #     cls.PRIMARY_KEYS: { "id", "user_id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "drive_items": {  # requires SharePoint license
-            #     cls.PRIMARY_KEYS: {"id", "user_id"},
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # },
-            # "mail_messages": {  # per-user stream; excluded when user access not granted
-            #     cls.PRIMARY_KEYS: { "id", "user_id" },
-            #     cls.REPLICATION_METHOD: cls.FULL_TABLE,
-            #     cls.REPLICATION_KEYS: set(),
-            #     cls.OBEYS_START_DATE: False,
-            #     cls.API_LIMIT: 999
-            # }
         }
 
     @staticmethod
