@@ -7,7 +7,7 @@ LOGGER = get_logger()
 
 class DirectoryRoleMember(FullTableStream):
     tap_stream_id = "directory_role_member"
-    key_properties = ["id"]
+    key_properties = ["id", "role_id"]
     replication_method = "FULL_TABLE"
     replication_keys = []
     data_key = "value"
@@ -27,3 +27,11 @@ class DirectoryRoleMember(FullTableStream):
         Update params for the stream
         """
         self.params.update(kwargs)
+
+    def modify_object(self, record: Dict, parent_record: Dict = None) -> Dict:
+        """
+        Modify the record before writing to the stream
+        """
+        if parent_record:
+            record["role_id"] = parent_record.get("id")
+        return record

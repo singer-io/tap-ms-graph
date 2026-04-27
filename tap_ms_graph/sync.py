@@ -25,7 +25,10 @@ def write_schema(stream, client, streams_to_sync, catalog) -> None:
         stream.write_schema()
 
     for child in stream.children:
-        child_obj = STREAMS[child](client, catalog.get_stream(child))
+        child_catalog_entry = catalog.get_stream(child)
+        if child_catalog_entry is None:
+            continue
+        child_obj = STREAMS[child](client, child_catalog_entry)
         write_schema(child_obj, client, streams_to_sync, catalog)
         if child in streams_to_sync:
 

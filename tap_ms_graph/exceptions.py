@@ -32,7 +32,7 @@ class MsGraphConflictError(MsGraphError):
     """class representing 409 status code."""
     pass
 
-class MsGraphUnprocessableEntityError(MsGraphBackoffError):
+class MsGraphUnprocessableEntityError(MsGraphError):
     """class representing 422 status code."""
     pass
 

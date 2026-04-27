@@ -1,13 +1,6 @@
-import copy
-import os
-import unittest
-from datetime import datetime as dt
-from datetime import timedelta
 
-import dateutil.parser
-import pytz
-from tap_tester import connections, menagerie, runner
-from tap_tester.logger import LOGGER
+import os
+
 from tap_tester.base_suite_tests.base_case import BaseCase
 
 
@@ -19,6 +12,11 @@ class MS_GraphBaseTest(BaseCase):
     """
     start_date = "2019-01-01T00:00:00Z"
     PARENT_TAP_STREAM_ID = "parent-tap-stream-id"
+
+    # We do not have a test account with permissions to access these streams, Removed them from expected_metadata for now.
+        # 'audit_logs_signins', 'chats', 'conditional_access_policies',
+        # 'drives', 'calendar_events', 'contacts', 'mail_messages',
+        # 'chat_messages', 'drive_items', 'audit_logs_directory', 'teams'
 
     @staticmethod
     def tap_name():
@@ -48,36 +46,8 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            "audit_logs_signins": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "chats": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "chat_messages": {
-                cls.PRIMARY_KEYS: { "chat_id", "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "conditional_access_policies": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
             "directory_role_member": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "role_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
@@ -97,22 +67,15 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            "drives": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
             "group_member": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "group_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
             "group_owner": {
-                cls.PRIMARY_KEYS: { "id" },
+                cls.PRIMARY_KEYS: { "id", "group_id" },
                 cls.REPLICATION_METHOD: cls.FULL_TABLE,
                 cls.REPLICATION_KEYS: set(),
                 cls.OBEYS_START_DATE: False,
@@ -159,44 +122,22 @@ class MS_GraphBaseTest(BaseCase):
                 cls.OBEYS_START_DATE: False,
                 cls.API_LIMIT: 999
             },
-            "calendar_events": {
-                cls.PRIMARY_KEYS: { "id", "user_id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "contacts": {
-                cls.PRIMARY_KEYS: { "id", "user_id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "drive_items": {
-                cls.PRIMARY_KEYS: {"id", "user_Id"},
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            },
-            "mail_messages": {
-                cls.PRIMARY_KEYS: { "id" },
-                cls.REPLICATION_METHOD: cls.FULL_TABLE,
-                cls.REPLICATION_KEYS: set(),
-                cls.OBEYS_START_DATE: False,
-                cls.API_LIMIT: 999
-            }
         }
 
     @staticmethod
     def get_credentials():
         """Authentication information for the test account."""
         credentials_dict = {}
-        creds = {'tenant_id': 'AZURE_TENANT_ID', 'client_id': 'AZURE_CLIENT_ID', 'client_secret': 'AZURE_CLIENT_SECRET', 'scope': 'AZURE_SCOPE'}
+        creds = {
+            'tenant_id': ('TAP_MS_GRAPH_TENANT_ID', 'AZURE_TENANT_ID'),
+            'client_id': ('TAP_MS_GRAPH_CLIENT_ID', 'AZURE_CLIENT_ID'),
+            'client_secret': ('TAP_MS_GRAPH_CLIENT_SECRET', 'AZURE_CLIENT_SECRET'),
+            'scope': ('TAP_MS_GRAPH_SCOPE', 'AZURE_SCOPE')
+        }
 
-        for cred in creds:
-            credentials_dict[cred] = os.getenv(creds[cred])
+        for cred, env_vars in creds.items():
+            primary_env, legacy_env = env_vars
+            credentials_dict[cred] = os.getenv(primary_env) or os.getenv(legacy_env)
 
         return credentials_dict
 

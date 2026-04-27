@@ -178,20 +178,21 @@ class TestClientRequests:
         ["/me/messages", "/me/events"],
         ids=["messages", "events"]
     )
+    @patch("time.sleep", return_value=None)
     @patch("requests.Session.request")
-    def test_request_errors_retry(self, mock_request, client_config, mock_token, error, endpoint):
+    def test_request_errors_retry(self, mock_request, mock_sleep, client_config, mock_token, error, endpoint):
         """
         Test that transient network errors trigger retries and eventually raise the
         corresponding exception after max retries.
         """
         full_url = f"{self.base_url}{endpoint}"
-        mock_request.side_effect = [mock_token] + [error()] * 5
+        mock_request.side_effect = [mock_token] + [error()] * 6
 
         with pytest.raises(error):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
-        assert mock_request.call_count == 6  # 1 for token + 5 retries
+        assert mock_request.call_count == 7  # 1 for token + 6 retries
 
     @pytest.mark.parametrize(
         "retry_after",
@@ -203,8 +204,9 @@ class TestClientRequests:
         ["/me/messages", "/me/contacts"],
         ids=["messages", "contacts"]
     )
+    @patch("time.sleep", return_value=None)
     @patch("requests.Session.request")
-    def test_rate_limit_error(self, mock_request, client_config, mock_token, endpoint, retry_after):
+    def test_rate_limit_error(self, mock_request, mock_sleep, client_config, mock_token, endpoint, retry_after):
         """
         Test that hitting the rate limit (429) with Retry-After headers causes the
         client to raise MsGraphRateLimitError after retry attempts.
@@ -213,13 +215,13 @@ class TestClientRequests:
 
         mock_request.side_effect = [mock_token] + [
             get_response(429, {}, headers={"Retry-After": retry_after}, raise_error=True)
-        ] * 5
+        ] * 6
 
         with pytest.raises(MsGraphRateLimitError):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
-        assert mock_request.call_count == 6
+        assert mock_request.call_count == 7
 
     @pytest.mark.parametrize(
         "endpoint",
@@ -268,13 +270,13 @@ class TestClientRequests:
                 headers={"Retry-After": retry_after},
                 raise_error=True
             )
-        ] * 5
+        ] * 6
 
         with pytest.raises(MsGraphRateLimitError):
             with Client(client_config) as client:
                 client.get(full_url, {}, self.default_headers)
 
-        assert mock_request.call_count == 6
+        assert mock_request.call_count == 7
         assert mock_sleep.call_count >= 1
 
 

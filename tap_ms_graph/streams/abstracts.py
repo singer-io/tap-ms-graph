@@ -34,6 +34,7 @@ class BaseStream(ABC):
     data_key = ""
     parent_bookmark_key = ""
     http_method = "GET"
+    supports_top = True
 
     def __init__(self, client=None, catalog=None) -> None:
         self.client = client
@@ -73,6 +74,40 @@ class BaseStream(ABC):
     def is_selected(self):
         return metadata.get(self.metadata, (), "selected")
 
+    @classmethod
+    def check_access(cls, client, parent_record: Dict = None) -> None:
+        """Makes a lightweight API call ($top=1) to verify that the credentials
+        have read access to this stream's endpoint.
+
+        Child streams (those with a non-empty ``parent`` attribute) depend on a
+        parent object ID that is only available at sync time, so their access is
+        governed by their parent stream's permissions and they are skipped here.
+
+        Raises:
+            MsGraphForbiddenError: if the API returns 403 Forbidden, or a 400
+                that indicates a licensing / feature restriction (e.g. "Tenant
+                does not have a SPO license.").
+        """
+        if cls.parent and parent_record is None:
+            # Child streams are controlled by the parent stream's permissions.
+            # Without a sample parent record we cannot build the child URL, so
+            # skip the check here; the caller is responsible for supplying a
+            # parent_record when it wants to probe child stream access.
+            return
+
+        from collections import defaultdict
+        from tap_ms_graph.exceptions import MsGraphForbiddenError, MsGraphUnauthorizedError, MsGraphBadRequestError
+
+        if cls.parent:
+            # Substitute every {placeholder} in the path with the parent's id
+            # regardless of the placeholder name (user_id, group_id, etc.).
+            url_path = cls.path.lstrip('/').format_map(defaultdict(lambda: parent_record['id']))
+            endpoint = f"{client.base_url}/{url_path}"
+        else:
+            endpoint = f"{client.base_url}/{cls.path}"
+
+        params = {"$top": "1"} if cls.supports_top else {}
+        client.get(endpoint, params, cls.headers)
 
     @abstractmethod
     def sync(
@@ -100,14 +135,18 @@ class BaseStream(ABC):
     def get_records(self) -> Iterator:
         """Interacts with api client interaction and pagination."""
         next_page = 1
+        params = self.params
         while next_page:
             response = self.client.get(
-                self.url_endpoint, self.params, self.headers, self.path
+                self.url_endpoint, params, self.headers, self.path
             )
             raw_records = response.get(self.data_key, [])
             next_page = response.get(self.next_page_key)
             if next_page:
+                # The nextLink URL already contains all query params (e.g. $top,
+                # $skiptoken), so passing params again would duplicate them.
                 self.url_endpoint = next_page
+                params = {}
             yield from raw_records
 
     def write_schema(self) -> None:
@@ -228,6 +267,7 @@ class FullTableStream(BaseStream):
         self.update_params()
         with metrics.record_counter(self.tap_stream_id) as counter:
             for record in self.get_records():
+                record = self.modify_object(record, parent_obj)
                 transformed_record = transformer.transform(
                     record, self.schema, self.metadata
                 )

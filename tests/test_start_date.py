@@ -1,8 +1,9 @@
 from base import MS_GraphBaseTest
 from tap_tester.base_suite_tests.start_date_test import StartDateTest
+import unittest
 
 
-
+@unittest.skip("Not applicable for full table streams: all MS Graph streams use FULL TABLE.")
 class MS_GraphStartDateTest(StartDateTest, MS_GraphBaseTest):
     """Instantiate start date according to the desired data set and run the
     test."""
@@ -12,7 +13,13 @@ class MS_GraphStartDateTest(StartDateTest, MS_GraphBaseTest):
         return "tap_tester_ms_graph_start_date_test"
 
     def streams_to_test(self):
-        streams_to_exclude = {}
+        # Exclude streams with no records
+        streams_to_exclude = {
+            'audit_logs_signins', 'chats', 'conditional_access_policies',
+            'drives', 'calendar_events', 'contacts', 'mail_messages',
+            'chat_messages', 'drive_items', 'audit_logs_directory', 'teams',
+            'channels', 'team_member'
+        }
         return self.expected_stream_names().difference(streams_to_exclude)
 
     @property
