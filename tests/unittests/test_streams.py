@@ -13,6 +13,7 @@ from tap_ms_graph.exceptions import (
     MsGraphBadRequestError,
     MsGraphBackoffError,
     MsGraphInternalServerError,
+    MsGraphNotFoundError,
 )
 
 
@@ -231,6 +232,21 @@ class TestGetRecords:
 
         assert len(records) == 3
         assert client.get.call_count == 3
+
+    def test_not_found_404_yields_nothing_and_no_exception(self):
+        """A 404 MsGraphNotFoundError means the resource does not exist for
+        this parent (e.g. a user with no OneDrive).  get_records() must return
+        an empty iterator rather than propagating the exception."""
+        client = make_client()
+        entry = make_catalog_entry()
+        client.get.side_effect = MsGraphNotFoundError("HTTP-error-code: 404, Error: User's mysite not found.")
+
+        stream = Users(client, entry)
+        stream.update_params()
+        records = list(stream.get_records())
+
+        assert records == []
+        client.get.assert_called_once()  # no retry after 404
 
 
 # ---------------------------------------------------------------------------
