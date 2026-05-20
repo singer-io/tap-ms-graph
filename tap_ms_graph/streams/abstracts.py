@@ -10,6 +10,7 @@ from singer import (
     write_schema,
     metadata
 )
+from tap_ms_graph.exceptions import MsGraphNotFoundError
 
 LOGGER = get_logger()
 
@@ -137,9 +138,17 @@ class BaseStream(ABC):
         next_page = 1
         params = self.params
         while next_page:
-            response = self.client.get(
-                self.url_endpoint, params, self.headers, self.path
-            )
+            try:
+                response = self.client.get(
+                    self.url_endpoint, params, self.headers, self.path
+                )
+            except MsGraphNotFoundError:
+                LOGGER.warning(
+                    "Resource not found for stream '%s' (endpoint: %s); skipping.",
+                    self.tap_stream_id,
+                    self.url_endpoint,
+                )
+                return
             raw_records = response.get(self.data_key, [])
             next_page = response.get(self.next_page_key)
             if next_page:

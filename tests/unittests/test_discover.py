@@ -51,19 +51,22 @@ def schemas_and_metadata():
 
 
 # ---------------------------------------------------------------------------
-# Tests: discover() without a client (no permission check)
+# Tests: discover() — schema structure (permission checks skipped via mock)
 # ---------------------------------------------------------------------------
 
-class TestDiscoverWithoutClient:
+class TestDiscoverSchemaStructure:
     def test_returns_all_streams(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
+        mock_client = MagicMock()
         mock_streams = _make_streams(
             {"users": "", "groups": "", "group_member": "groups"}
         )
+        for cls in mock_streams.values():
+            cls.check_access.return_value = None
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            catalog = discover(client=None)
+            catalog = discover(client=mock_client)
 
         stream_names = {e.stream for e in catalog.streams}
         assert stream_names == {"users", "groups", "group_member"}
@@ -71,33 +74,39 @@ class TestDiscoverWithoutClient:
     def test_returns_catalog_instance(self, schemas_and_metadata):
         from singer.catalog import Catalog
         schemas, field_metadata = schemas_and_metadata
+        mock_client = MagicMock()
         mock_streams = _make_streams({"users": ""})
+        mock_streams["users"].check_access.return_value = None
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            catalog = discover(client=None)
+            catalog = discover(client=mock_client)
 
         assert isinstance(catalog, Catalog)
 
     def test_catalog_entries_have_key_properties(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
+        mock_client = MagicMock()
         mock_streams = _make_streams({"users": ""})
+        mock_streams["users"].check_access.return_value = None
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            catalog = discover(client=None)
+            catalog = discover(client=mock_client)
 
         assert catalog.streams[0].key_properties == ["id"]
 
-    def test_no_check_access_called_without_client(self, schemas_and_metadata):
+    def test_check_access_called_for_top_level_streams(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
+        mock_client = MagicMock()
         mock_streams = _make_streams({"users": ""})
+        mock_streams["users"].check_access.return_value = None
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            discover(client=None)
+            discover(client=mock_client)
 
-        mock_streams["users"].check_access.assert_not_called()
+        mock_streams["users"].check_access.assert_called_once_with(mock_client)
 
 
 # ---------------------------------------------------------------------------
@@ -145,10 +154,8 @@ class TestDiscoverWithClient:
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(schemas, field_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            catalog = discover(client=mock_client)
-
-        # All streams inaccessible → catalog is empty (no raise)
-        assert catalog.streams == []
+            with pytest.raises(MsGraphForbiddenError, match="No streams are accessible"):
+                discover(client=mock_client)
 
     def test_child_excluded_when_parent_inaccessible(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
@@ -215,10 +222,9 @@ class TestDiscoverWithClient:
 
         with patch("tap_ms_graph.discover.get_schemas", return_value=(extra_schemas, extra_metadata)), \
              patch("tap_ms_graph.discover.STREAMS", mock_streams):
-            # All top-level streams forbidden → empty catalog
-            catalog = discover(client=mock_client)
-
-        assert catalog.streams == []
+            # All top-level streams forbidden → raises MsGraphForbiddenError
+            with pytest.raises(MsGraphForbiddenError, match="No streams are accessible"):
+                discover(client=mock_client)
 
     def test_catalog_entries_have_tap_stream_id(self, schemas_and_metadata):
         schemas, field_metadata = schemas_and_metadata
