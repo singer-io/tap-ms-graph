@@ -47,7 +47,13 @@ def _probe_child_access(client, stream_cls, stream_name) -> Set[str]:
             )
             inaccessible.add(child_stream_name)
         except MsGraphBadRequestError as e:
-            if "license" in str(e).lower() or "does not have" in str(e).lower():
+            error_msg = str(e).lower()
+            if any(phrase in error_msg for phrase in (
+                "license",
+                "does not have",
+                "not supported",
+                "application-only",
+            )):
                 LOGGER.warning(
                     "Child stream '%s' is not accessible and will be excluded from the catalog.",
                     child_stream_name,
@@ -71,7 +77,13 @@ def _check_top_level_access(client, stream_name, stream_cls, accessible_top_leve
         )
         return False
     except MsGraphBadRequestError as e:
-        if "license" in str(e).lower() or "does not have" in str(e).lower():
+        error_msg = str(e).lower()
+        if any(phrase in error_msg for phrase in (
+            "license",
+            "does not have",
+            "not supported",
+            "application-only",
+        )):
             LOGGER.warning(
                 "Stream '%s' is not accessible and will be excluded from the catalog.",
                 stream_name,
@@ -100,7 +112,7 @@ def _is_child_stream_accessible(stream_name, stream_cls, accessible_top_level, i
     return True
 
 
-def discover(client=None) -> Catalog:
+def discover(client) -> Catalog:
     """
     Run the discovery mode, prepare the catalog file and return the catalog.
     """
@@ -120,19 +132,18 @@ def discover(client=None) -> Catalog:
     for stream_name, schema_dict in sorted_streams:
         stream_cls = STREAMS.get(stream_name)
 
-        if client:
-            if stream_cls is None:
-                # Stream exists in schemas but has no registered class; skip when
-                # a client is present since we cannot verify access.
+        if stream_cls is None:
+            # Stream exists in schemas but has no registered class; skip since
+            # we cannot verify access.
+            continue
+        if not stream_cls.parent:
+            # ---- Top-level stream: check access, then probe children ----
+            if not _check_top_level_access(client, stream_name, stream_cls, accessible_top_level, inaccessible_child_streams):
                 continue
-            if not stream_cls.parent:
-                # ---- Top-level stream: check access, then probe children ----
-                if not _check_top_level_access(client, stream_name, stream_cls, accessible_top_level, inaccessible_child_streams):
-                    continue
-            else:
-                # ---- Child stream: skip if parent or self is inaccessible ----
-                if not _is_child_stream_accessible(stream_name, stream_cls, accessible_top_level, inaccessible_child_streams):
-                    continue
+        else:
+            # ---- Child stream: skip if parent or self is inaccessible ----
+            if not _is_child_stream_accessible(stream_name, stream_cls, accessible_top_level, inaccessible_child_streams):
+                continue
 
         try:
             schema = Schema.from_dict(schema_dict)
@@ -151,5 +162,16 @@ def discover(client=None) -> Catalog:
         except Exception as err:
             LOGGER.error(f"Error processing stream '{stream_name}'")
             raise err
+
+    if not catalog.streams:
+        LOGGER.error(
+            "Discovery returned an empty catalog: no streams are accessible with the "
+            "provided credentials. Verify that the service principal / user has the "
+            "required Microsoft Graph API permissions."
+        )
+        raise MsGraphForbiddenError(
+            "No streams are accessible. Check that the configured credentials have "
+            "the required Microsoft Graph API permissions."
+        )
 
     return catalog

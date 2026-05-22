@@ -12,7 +12,7 @@ setup(name="tap-ms-graph",
       py_modules=["tap_ms_graph"],
       install_requires=[
         "singer-python==6.8.0",
-        "requests==2.33.1",
+        "requests==2.34.2",
         "backoff==2.2.1"
       ],
         extras_require={
